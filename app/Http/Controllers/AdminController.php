@@ -131,7 +131,11 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        $user = User::find($id);
+        if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
+            Storage::delete('public/'.$user->fotoprofil);
+        }
+        $user->delete();
         return redirect()->route('admin.index')
             ->with('success', 'Admin berhasil dihapus');
     }

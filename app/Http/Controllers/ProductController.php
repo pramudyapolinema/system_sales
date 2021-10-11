@@ -43,9 +43,9 @@ class ProductController extends Controller
         ]);
 
         if ($request->file('foto_produk')) {
-            $image_name = $request->file('foto_produk')->store('images/produk', 'public');
+            $image_name = $request->file('foto_produk')->store('images/products', 'public');
         } else {
-            $image_name = 'images/produk/produk.png';
+            $image_name = 'images/products/produk.png';
         }
 
         $produk = new Product;
@@ -97,13 +97,13 @@ class ProductController extends Controller
         $produk = Product::find($id);
 
         if ($request->has('foto_produk')) {
-            if($produk->foto_produk != 'images/produk/produk.png' && file_exists(storage_path('app/public/'.$produk->foto_produk))) {
+            if($produk->foto_produk != 'images/products/produk.png' && file_exists(storage_path('app/public/'.$produk->foto_produk))) {
                 Storage::delete('public/'.$produk->foto_produk);
             }
-            $image_name = $request->file('foto_produk')->store('images/produk', 'public');
+            $image_name = $request->file('foto_produk')->store('images/products', 'public');
             $produk->foto_produk = $image_name;
         } else {
-            $image_name = 'images/produk/produk.png';
+            $image_name = 'images/products/produk.png';
         }
 
         $produk->nama_produk = $request->get('nama_produk');
@@ -122,7 +122,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        Product::find($id)->delete();
+        $produk = Product::find($id);
+        // if($produk->foto_produk != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$produk->foto_produk))){
+            Storage::delete('public/'.$produk->foto_produk);
+        // }
+        $produk->delete();
         return redirect()->route('produk.index')
             ->with('success', 'Produk berhasil dihapus');
     }

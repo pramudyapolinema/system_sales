@@ -42,7 +42,7 @@
                                     <td>{{ $a->name }}</td>
                                     <td>{{ $a->email }}</td>
                                     <td>{{ $a->level }}</td>
-                                    <td><img width="100px" src="{{ asset('storage/'.$a->foto) }}"></td>
+                                    <td><img width="100px" src="{{ asset('storage/'.$a->fotoprofil) }}"></td>
                                     <td>{{ $a->created_at }}</td>
                                     <td>
                                         <a data-toggle="modal" id="infoAdmin" data-target="#modal-info{{$a->id}}"

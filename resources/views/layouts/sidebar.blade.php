@@ -4,7 +4,7 @@
     <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
         <img src="{{ asset('assets/AdminLTE/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">System Sales</span>
     </a>
 
     <!-- Sidebar -->
@@ -12,7 +12,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset('storage/'. Auth::user()->foto) }}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset('storage/'. Auth::user()->fotoprofil) }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -54,6 +54,32 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.index') }}" class="nav-link">
+                                <i class="far fa-crown nav-icon"></i>
+                                <p>Admin</p>
+                            </a>
+                        </li>
+                        {{-- <li class="nav-item">
+                            <a href="{{ route('teknisi.index') }}" class="nav-link">
+                                <i class="far fa-cog nav-icon"></i>
+                                <p>Teknisi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('kasir.index') }}" class="nav-link">
+                                <i class="far fa-money-check nav-icon"></i>
+                                <p>Kasir</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('alluser.index') }}" class="nav-link">
+                                <i class="far fa-users nav-icon"></i>
+                                <p>All User</p>
+                            </a>
+                        </li> --}}
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('produk.index') }}" class="nav-link">

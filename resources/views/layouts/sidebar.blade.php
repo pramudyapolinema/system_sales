@@ -32,7 +32,7 @@
         </div>
 
         <!-- Sidebar Menu -->
-        {{-- <nav class="mt-2">
+        <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
@@ -54,43 +54,17 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.index') }}" class="nav-link">
-                                <i class="far fa-crown nav-icon"></i>
-                                <p>Admin</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('teknisi.index') }}" class="nav-link">
-                                <i class="far fa-cog nav-icon"></i>
-                                <p>Teknisi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('kasir.index') }}" class="nav-link">
-                                <i class="far fa-money-check nav-icon"></i>
-                                <p>Kasir</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('alluser.index') }}" class="nav-link">
-                                <i class="far fa-users nav-icon"></i>
-                                <p>All User</p>
-                            </a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('kategori.index') }}" class="nav-link">
+                    <a href="{{ route('produk.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-list"></i>
                         <p>
-                            Kategori
+                            Produk
                         </p>
                     </a>
                 </li>
                 @endif
-                @if (auth()->user()->level == "teknisi" || auth()->user()->level == "admin")
+                {{-- @if (auth()->user()->level == "teknisi" || auth()->user()->level == "admin")
                 <li class="nav-header">TEKNISI</li>
                 <li class="nav-item">
                     <a href="{{{ route('pesanan.index')}}}" class="nav-link">
@@ -111,9 +85,9 @@
                         </p>
                     </a>
                 </li>
-                @endif
+                @endif --}}
             </ul>
-        </nav> --}}
+        </nav>
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'ceklevel:admin,teknisi,kasir,alluser'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+});
+
+Route::middleware(['auth', 'ceklevel:admin'])->group(function () {
+    Route::resource('/produk', ProductController::class);
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

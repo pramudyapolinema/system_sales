@@ -123,9 +123,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $produk = Product::find($id);
-        // if($produk->foto_produk != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$produk->foto_produk))){
+        if (/*-$produk->foto_produk != 'images/user_profile/user.png' && */ file_exists(storage_path('app/public/'.$produk->foto_produk))){
             Storage::delete('public/'.$produk->foto_produk);
-        // }
+        }
         $produk->delete();
         return redirect()->route('produk.index')
             ->with('success', 'Produk berhasil dihapus');

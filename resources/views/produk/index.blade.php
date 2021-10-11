@@ -147,7 +147,7 @@
                     <!-- /.card-body -->
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-register">
-                    <i class="fas fa-plus"></i>&nbsp;Tambahkan Data User Baru</a>
+                    <i class="fas fa-plus"></i>&nbsp;Tambahkan Data Produk Baru</a>
                 </button>
             </div>
         </div>

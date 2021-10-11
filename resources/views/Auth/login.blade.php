@@ -22,9 +22,9 @@
       <a href="#" class="h1"><b>Sales</b> System</a>
     </div>
     <div class="card-body">
-        @if ($message = Session::get('success'))
-<div class="alert alert-success">
-    <p>{{ $message }}</p>
+        @if ($message = Session::get('error'))
+<div class="alert alert-danger">
+    {{ $message }}
 </div>
 <!-- Tables -->
 @endif

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Admin')
+@section('title', 'Pelanggan')
 @section('content')
 
 <!-- Main content -->
@@ -19,7 +19,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Seluruh Admin</h3>
+                        <h3 class="card-title">Data Seluruh Pelanggan</h3>
                       </div>
                     <div class="card-body">
                         <table class="table table-bordered table-stripped" id="example1" aria-label="">
@@ -28,34 +28,32 @@
                                     <th scope="">No.</th>
                                     <th scope="">Nama</th>
                                     <th scope="">Email</th>
-                                    <th scope="">Level</th>
+                                    <th scope="">No. HP</th>
                                     <th scope="">Foto</th>
                                     <th scope="">Dibuat</th>
                                     <th scope="">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($admin)
-                                @foreach ($admin as $a)
+                                @if ($pelanggan)
+                                @foreach ($pelanggan as $a)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $a->name }}</td>
                                     <td>{{ $a->email }}</td>
-                                    <td>{{ $a->level }}</td>
+                                    <td>{{ $a->phone }}</td>
                                     <td><img width="100px" src="{{ asset('storage/'.$a->fotoprofil) }}" alt="fotoprofil"></td>
                                     <td>{{ $a->created_at }}</td>
                                     <td>
-                                        <a data-toggle="modal" id="infoAdmin" data-target="#modal-info{{$a->id}}"
+                                        <a data-toggle="modal" id="infoPelanggan" data-target="#modal-info{{$a->id}}"
                                             class="btn btn-info"><em class="fas fa-info-circle"></em></a>
-                                        <a data-toggle="modal" id="updateAdmin" data-target="#modal-edit{{$a->id}}"
+                                        <a data-toggle="modal" id="updatePelanggan" data-target="#modal-edit{{$a->id}}"
                                             class="btn btn-success"><em class="fas fa-edit"></em></a>
-                                        @if ($user != $a->id)
-                                        <form action="{{ route('admin.destroy', $a->id) }}" method="POST">
+                                        <form action="{{ route('pelanggan.destroy', $a->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"><em class="fas fa-trash"></em></button>
                                         </form>
-                                        @endif
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="modal-edit{{$a->id}}">
@@ -69,7 +67,7 @@
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route ('admin.update', $a->id) }}" method="POST"
+                                                <form action="{{ route ('pelanggan.update', $a->id) }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
@@ -84,6 +82,15 @@
                                                             value="{{ $a->email }}">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="phone">No. HP</label>
+                                                        <input type="text" class="form-control" name="phone" id="phone"
+                                                            value="{{ $a->phone }}">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="alamat">Alamat</label>
+                                                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat">{{ $a->alamat }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="password">Password</label>
                                                         <input type="password" class="form-control" name="password"
                                                             id="password" placeholder="Masukkan password">
@@ -93,8 +100,8 @@
                                                         <select class="form-control" name="level" id="name">
                                                             <option {{ $a->level == 'admin' ? 'selected':'' }}
                                                                 value="admin">Admin</option>
-                                                            <option {{ $a->level == 'teknisi' ? 'selected':'' }}
-                                                                value="teknisi">Teknisi</option>
+                                                            <option {{ $a->level == 'pelanggan' ? 'selected':'' }}
+                                                                value="pelanggan">Pelanggan</option>
                                                             <option {{ $a->level == 'kasir' ? 'selected':'' }}
                                                                 value="kasir">Kasir</option>
                                                         </select>
@@ -142,6 +149,14 @@
                                                     <p>{{ $a->email }}</p>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="phone">Phone</label>
+                                                    <p>{{ $a->phone }}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="alamat">Alamat</label>
+                                                    <p>{{ $a->alamat }}</p>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="level">Level</label>
                                                     <p>{{ $a->level }}</p>
                                                 </div>
@@ -173,7 +188,7 @@
                     <!-- /.card-body -->
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-register">
-                    <em class="fas fa-plus"></em>&nbsp;Tambahkan Data Admin Baru</a>
+                    <em class="fas fa-plus"></em>&nbsp;Tambahkan Data Pelanggan Baru</a>
                 </button>
             </div>
         </div>
@@ -185,13 +200,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Masukkan Data Admin Baru</h4>
+                <h4 class="modal-title">Masukkan Data Pelanggan Baru</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pelanggan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Nama</label>
@@ -202,6 +217,14 @@
                         <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email">
                     </div>
                     <div class="form-group">
+                        <label for="phone">No. Handphone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="08xxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat"></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password"
                             placeholder="Masukkan password">
@@ -209,7 +232,7 @@
                     <div class="form-group">
                         <label for="level">Level</label>
                         <select class="form-control" name="level" id="name">
-                            <option selected value="admin">Admin</option>
+                            <option selected value="pelanggan">Pelanggan</option>
                             <option value="teknisi">Teknisi</option>
                             <option value="kasir">Kasir</option>
                         </select>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class AdminController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = User::where('level', 'admin')->get();
-        $user = auth()->user()->id;
-        return view('admin.index', compact('admin', 'user'));
+        $pelanggan = User::where('level', 'pelanggan')->get();
+        return view('customer.index', compact('pelanggan'));
     }
 
     /**
@@ -44,6 +43,8 @@ class AdminController extends Controller
             'email'     => 'required',
             'password'  => 'required',
             'level'     => 'required',
+            'phone'     => 'required',
+            'alamat'    => 'required',
         ]);
 
         if($request->file('fotoprofil')){
@@ -55,14 +56,16 @@ class AdminController extends Controller
         $user = new User;
         $user->name = $request->get('name');
         $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->alamat = $request->get('alamat');
         $user->password = bcrypt($request->get('password'));
         $user->fotoprofil = $image_name;
         $user->level = $request->get('level');
         $user->remember_token = Str::random(60);
         $user->save();
 
-        return redirect()->route('admin.index')
-            ->with('success', 'Admin Berhasil Ditambahkan');
+        return redirect()->route('pelanggan.index')
+            ->with('success', 'Pelanggan Berhasil Ditambahkan');
     }
 
     /**
@@ -100,28 +103,32 @@ class AdminController extends Controller
             'name'      => 'required',
             'email'     => 'required',
             'level'     => 'required',
+            'phone'     => 'required',
+            'alamat'    => 'required',
         ]);
 
-        $admin = User::find($id);
+        $user = User::find($id);
 
         if($request->has('fotoprofil')){
-            if($admin->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$admin->fotoprofil))){
-                Storage::delete('public/'.$admin->fotoprofil);
+            if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
+                Storage::delete('public/'.$user->fotoprofil);
             }
             $image_name = $request->file('fotoprofil')->store('images/user_profile', 'public');
-            $admin->fotoprofil = $image_name;
+            $user->fotoprofil = $image_name;
         }
 
-        $admin->name = $request->get('name');
-        $admin->email = $request->get('email');
-        $admin->level = $request->get('level');
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->alamat = $request->get('alamat');
+        $user->level = $request->get('level');
         if($request->filled('password')){
-            $admin->password = bcrypt($request->get('password'));
+            $user->password = bcrypt($request->get('password'));
         }
-        $admin->save();
+        $user->save();
 
-        return redirect()->route('admin.index')
-            ->with('success', 'Data Admin berhasil diupdate');
+        return redirect()->route('pelanggan.index')
+            ->with('success', 'Data Pelanggan berhasil diupdate');
     }
 
     /**
@@ -132,14 +139,12 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        if (auth()->user()->id != $id) {
-            $user = User::find($id);
-            if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
-                Storage::delete('public/'.$user->fotoprofil);
-            }
-            $user->delete();
-            return redirect()->route('admin.index')
-                ->with('success', 'Admin berhasil dihapus');
+        $user = User::find($id);
+        if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
+            Storage::delete('public/'.$user->fotoprofil);
         }
+        $user->delete();
+        return redirect()->route('pelanggan.index')
+            ->with('success', 'Pelanggan berhasil dihapus');
     }
 }

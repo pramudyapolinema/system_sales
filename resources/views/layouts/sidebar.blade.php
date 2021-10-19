@@ -61,13 +61,13 @@
                                 <p>Admin</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('teknisi.index') }}" class="nav-link">
+                        <li class="nav-item">
+                            <a href="{{ route('pelanggan.index') }}" class="nav-link">
                                 <i class="far fa-cog nav-icon"></i>
-                                <p>Teknisi</p>
+                                <p>Pelanggan</p>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('kasir.index') }}" class="nav-link">
                                 <i class="far fa-money-check nav-icon"></i>
                                 <p>Kasir</p>
@@ -81,27 +81,19 @@
                         </li> --}}
                     </ul>
                 </li>
+                @endif
+                @if (auth()->user()->level == "pelanggan")
+                <li class="nav-header">Pelanggan</li>
                 <li class="nav-item">
-                    <a href="{{ route('produk.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-list"></i>
+                    <a href="{{ route('keranjang.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>
-                            Produk
+                            Keranjang
                         </p>
                     </a>
                 </li>
                 @endif
-                {{-- @if (auth()->user()->level == "teknisi" || auth()->user()->level == "admin")
-                <li class="nav-header">TEKNISI</li>
-                <li class="nav-item">
-                    <a href="{{{ route('pesanan.index')}}}" class="nav-link">
-                        <i class="nav-icon far fa-cogs"></i>
-                        <p>
-                            Perbaikan
-                        </p>
-                    </a>
-                </li>
-                @endif
-                @if (auth()->user()->level == "kasir" || auth()->user()->level == "admin")
+                {{-- @if (auth()->user()->level == "kasir" || auth()->user()->level == "admin")
                 <li class="nav-header">KASIR</li>
                 <li class="nav-item">
                     <a href="{{ route('pesanan.index') }}" class="nav-link">
@@ -112,6 +104,16 @@
                     </a>
                 </li>
                 @endif --}}
+                @if (auth()->user()->level == 'pelanggan' || auth()->user()->level == 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('produk.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Produk
+                        </p>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

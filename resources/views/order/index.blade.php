@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Produk')
+@section('title', 'Pelanggan')
 @section('content')
 
 <!-- Main content -->
@@ -19,74 +19,92 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Data Seluruh Produk</h3>
+                        <h3 class="card-title">Data Seluruh Pelanggan</h3>
                       </div>
                     <div class="card-body">
-                        <table class="table table-bordered table-stripped" id="example1">
+                        <table class="table table-bordered table-stripped" id="example1" aria-label="">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>Nama Produk</th>
-                                    <th>Deskripsi</th>
-                                    <th>Foto</th>
-                                    <th>Aksi</th>
+                                    <th scope="">No.</th>
+                                    <th scope="">Nama</th>
+                                    <th scope="">Email</th>
+                                    <th scope="">No. HP</th>
+                                    <th scope="">Foto</th>
+                                    <th scope="">Dibuat</th>
+                                    <th scope="">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($produk)
-                                @foreach ($produk as $a)
+                                @if ($pelanggan)
+                                @foreach ($pelanggan as $a)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $a->nama_produk }}</td>
-                                    <td>{{ $a->deskripsi }}</td>
-                                    <td><img width="100px" src="{{ asset('storage/'.$a->foto_produk) }}"></td>
+                                    <td>{{ $a->name }}</td>
+                                    <td>{{ $a->email }}</td>
+                                    <td>{{ $a->phone }}</td>
+                                    <td><img width="100px" src="{{ asset('storage/'.$a->fotoprofil) }}" alt="fotoprofil"></td>
+                                    <td>{{ $a->created_at }}</td>
                                     <td>
-                                        <a data-toggle="modal" id="infoProduk" data-target="#modal-info{{$a->id}}"
-                                            class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                                        @if (auth()->user()->level == 'admin')
-                                            <a data-toggle="modal" id="updateProduk" data-target="#modal-edit{{$a->id}}"
-                                                class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                            <form action="{{ route('produk.destroy', $a->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                        @endif
+                                        <a data-toggle="modal" id="infoPelanggan" data-target="#modal-info{{$a->id}}"
+                                            class="btn btn-info"><em class="fas fa-info-circle"></em></a>
+                                        <a data-toggle="modal" id="updatePelanggan" data-target="#modal-edit{{$a->id}}"
+                                            class="btn btn-success"><em class="fas fa-edit"></em></a>
+                                        <form action="{{ route('pelanggan.destroy', $a->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"><em class="fas fa-trash"></em></button>
+                                        </form>
                                     </td>
                                 </tr>
                                 <div class="modal fade" id="modal-edit{{$a->id}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="modal-judul">Edit data {{ $a->nama_produk }}</h4>
+                                                <h4 class="modal-title" id="modal-judul">Edit data {{ $a->name }}</h4>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
                                             <div class="modal-body">
-                                                <form action="{{ route ('produk.update', $a->id) }}" method="POST"
+                                                <form action="{{ route ('pelanggan.update', $a->id) }}" method="POST"
                                                     enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="form-group">
-                                                        <label for="nama_produk">Nama Produk</label>
-                                                        <input type="text" class="form-control" name="nama_produk" id="nama_produk"
-                                                            value="{{ $a->nama_produk }}">
+                                                        <label for="nama">Nama</label>
+                                                        <input type="text" class="form-control" name="name" id="name"
+                                                            value="{{ $a->name }}">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="deskripsi">Deskripsi</label>
-                                                        <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan deskripsi produk">{{ $a->deskripsi }}</textarea>
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" name="email" id="email"
+                                                            value="{{ $a->email }}">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="foto_produk">Foto Profil</label>
+                                                        <label for="password">Password</label>
+                                                        <input type="password" class="form-control" name="password"
+                                                            id="password" placeholder="Masukkan password">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="level">Level</label>
+                                                        <select class="form-control" name="level" id="name">
+                                                            <option {{ $a->level == 'admin' ? 'selected':'' }}
+                                                                value="admin">Admin</option>
+                                                            <option {{ $a->level == 'pelanggan' ? 'selected':'' }}
+                                                                value="pelanggan">Pelanggan</option>
+                                                            <option {{ $a->level == 'kasir' ? 'selected':'' }}
+                                                                value="kasir">Kasir</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="fotoprofil">Foto Profil</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
-                                                                    id="foto_produk" name="foto_produk">
-                                                                <label class="custom-file-label" for="foto_produk">Upload
-                                                                    foto produk</label>
+                                                                    id="fotoprofil" name="fotoprofil">
+                                                                <label class="custom-file-label" for="fotoprofil">Upload
+                                                                    foto profil</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -106,7 +124,7 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="modal-judul">Detail {{ $a->nama_produk }}</h4>
+                                                <h4 class="modal-title" id="modal-judul">Detail {{ $a->name }}</h4>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -114,16 +132,20 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="nama_produk">Nama Produk</label>
-                                                    <p>{{ $a->nama_produk }}</p>
+                                                    <label for="nama">Nama</label>
+                                                    <p>{{ $a->name }}</p>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="deskripsi">Deskripsi</label>
-                                                    <p>{{ $a->deskripsi }}</p>
+                                                    <label for="email">Email</label>
+                                                    <p>{{ $a->email }}</p>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="fotoprofil">Foto Produk</label><br>
-                                                    <img width="150px" src="{{ asset('storage/'.$a->foto_produk )}}">
+                                                    <label for="level">Level</label>
+                                                    <p>{{ $a->level }}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="fotoprofil">Foto Profil</label><br>
+                                                    <img width="150px" src="{{ asset('storage/'.$a->fotoprofil) }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="dibuat">Dibuat pada</label><br>
@@ -148,44 +170,54 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
-                @if (auth()->user()->level == 'admin')
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-register">
-                    <i class="fas fa-plus"></i>&nbsp;Tambahkan Data Produk Baru</a>
+                    <em class="fas fa-plus"></em>&nbsp;Tambahkan Data Pelanggan Baru</a>
                 </button>
-                @endif
             </div>
         </div>
     </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 </div>
-@if (auth()->user()->level == 'admin')
 <div class="modal fade" id="modal-register">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Masukkan Data Produk Baru</h4>
+                <h4 class="modal-title">Masukkan Data Pelanggan Baru</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('produk.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('pelanggan.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_produk">Nama Produk</label>
-                        <input type="text" class="form-control" name="nama_produk" id="nama_produk" placeholder="Masukkan nama produk">
+                        <label for="nama">Nama</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan nama">
                     </div>
                     <div class="form-group">
-                        <label for="deskripsi">Deskripsi</label>
-                        <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan deskripsi produk"></textarea>
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan email">
                     </div>
                     <div class="form-group">
-                        <label for="foto_produk">Foto Produk</label>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password"
+                            placeholder="Masukkan password">
+                    </div>
+                    <div class="form-group">
+                        <label for="level">Level</label>
+                        <select class="form-control" name="level" id="name">
+                            <option selected value="pelanggan">Pelanggan</option>
+                            <option value="teknisi">Teknisi</option>
+                            <option value="kasir">Kasir</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fotoprofil">Foto Profil</label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="foto_produk" name="foto_produk">
-                                <label class="custom-file-label" for="foto_produk">Upload foto produk</label>
+                                <input type="file" class="custom-file-input" id="fotoprofil" name="fotoprofil">
+                                <label class="custom-file-label" for="fotoprofil">Upload foto profil</label>
                             </div>
                         </div>
                     </div>
@@ -200,6 +232,5 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-@endif
 <!-- /.modal -->
 @endsection

@@ -46,7 +46,7 @@ class AdminController extends Controller
             'level'     => 'required',
         ]);
 
-        if($request->file('fotoprofil')){
+        if ($request->file('fotoprofil')) {
             $image_name = $request->file('fotoprofil')->store('images/user_profile', 'public');
         } else {
             $image_name = 'images/user_profile/user.png';
@@ -104,9 +104,9 @@ class AdminController extends Controller
 
         $admin = User::find($id);
 
-        if($request->has('fotoprofil')){
-            if($admin->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$admin->fotoprofil))){
-                Storage::delete('public/'.$admin->fotoprofil);
+        if ($request->has('fotoprofil')) {
+            if ($admin->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/' . $admin->fotoprofil))) {
+                Storage::delete('public/' . $admin->fotoprofil);
             }
             $image_name = $request->file('fotoprofil')->store('images/user_profile', 'public');
             $admin->fotoprofil = $image_name;
@@ -115,7 +115,7 @@ class AdminController extends Controller
         $admin->name = $request->get('name');
         $admin->email = $request->get('email');
         $admin->level = $request->get('level');
-        if($request->filled('password')){
+        if ($request->filled('password')) {
             $admin->password = bcrypt($request->get('password'));
         }
         $admin->save();
@@ -134,8 +134,8 @@ class AdminController extends Controller
     {
         if (auth()->user()->id != $id) {
             $user = User::find($id);
-            if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
-                Storage::delete('public/'.$user->fotoprofil);
+            if ($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/' . $user->fotoprofil))) {
+                Storage::delete('public/' . $user->fotoprofil);
             }
             $user->delete();
             return redirect()->route('admin.index')

@@ -39,7 +39,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $a->nama_produk }}</td>
                                     <td>{{ $a->deskripsi }}</td>
-                                    <td><img width="100px" src="{{ asset('storage/'.$a->foto_produk) }}"></td>
+                                    <td><img width="100px" src="{{ $a->foto_produk }}"></td>
                                     <td>
                                         <a data-toggle="modal" id="infoProduk" data-target="#modal-info{{$a->id}}"
                                             class="btn btn-info"><i class="fas fa-info-circle"></i></a>
@@ -80,7 +80,7 @@
                                                         <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan deskripsi produk">{{ $a->deskripsi }}</textarea>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="foto_produk">Foto Profil</label>
+                                                        <label for="foto_produk">Foto Produk</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input"
@@ -123,7 +123,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fotoprofil">Foto Produk</label><br>
-                                                    <img width="150px" src="{{ asset('storage/'.$a->foto_produk )}}">
+                                                    <img width="150px" src="{{ $a->foto_produk }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="dibuat">Dibuat pada</label><br>

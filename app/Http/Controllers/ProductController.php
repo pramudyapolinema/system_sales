@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\OracleBucket;
 
 class ProductController extends Controller
 {
@@ -43,7 +44,11 @@ class ProductController extends Controller
         ]);
 
         if ($request->file('foto_produk')) {
-            $image_name = $request->file('foto_produk')->store('images/products', 'public');
+            $file = $request->file('foto_produk');
+            $name = rand().'.'.$file->getClientOriginalName();
+            $file->move('images/products', $name);
+            $cloud = new OracleBucket;
+            $image_name = $cloud->upload_file_oracle('system_sales', 'images', 'images/products/'.$name);
         } else {
             $image_name = 'images/products/produk.png';
         }
@@ -123,9 +128,12 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $produk = Product::find($id);
-        if (/*-$produk->foto_produk != 'images/user_profile/user.png' && */ file_exists(storage_path('app/public/'.$produk->foto_produk))){
-            Storage::delete('public/'.$produk->foto_produk);
-        }
+        // if (/*-$produk->foto_produk != 'images/user_profile/user.png' && */ file_exists(storage_path('app/public/'.$produk->foto_produk))){
+        //     Storage::delete('public/'.$produk->foto_produk);
+        // }
+        unlink('images/products/'.basename($produk->foto_produk));
+        $oracle = new OracleBucket;
+        $oracle->delete_file_oracle('images/images/products', basename($produk->foto_produk));
         $produk->delete();
         return redirect()->route('produk.index')
             ->with('success', 'Produk berhasil dihapus');

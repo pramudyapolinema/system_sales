@@ -13,7 +13,8 @@ class Cart extends Model
         'id_customer',
         'id_product',
         'jumlah',
-        'catatan'
+        'catatan',
+        'total',
     ];
 
     public function pelanggan() {

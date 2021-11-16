@@ -17,7 +17,11 @@ class CartController extends Controller
     {
         $produk = Product::all();
         $keranjang = Cart::where('id_customer', auth()->user()->id)->get();
-        return view('cart.index', compact('keranjang', 'produk'));
+        $total = 0;
+        foreach($keranjang as $k){
+            $total = $total + $k->total;
+        }
+        return view('cart.index', compact('keranjang', 'produk', 'total'));
     }
 
     /**
@@ -42,12 +46,13 @@ class CartController extends Controller
             'id_product'   => 'required',
             'jumlah'     => 'required',
         ]);
-
+        $produk = Product::find($request->get('id_product'));
         $cart = new Cart;
         $cart->id_product = $request->get('id_product');
         $cart->id_customer = auth()->user()->id;
         $cart->jumlah = $request->get('jumlah');
         $cart->catatan = $request->get('catatan');
+        $cart->total = $request->get('jumlah') * $produk->harga;
         $cart->save();
 
         return redirect()->route('keranjang.index')
@@ -90,11 +95,13 @@ class CartController extends Controller
             'jumlah'     => 'required',
         ]);
 
+        $produk = Product::find($request->get('id_product'));
         $cart = Cart::find($id);
         $cart->id_product = $request->get('id_product');
         $cart->id_customer = auth()->user()->id;
         $cart->jumlah = $request->get('jumlah');
         $cart->catatan = $request->get('catatan');
+        $cart->total = $request->get('jumlah') * $produk->harga;
         $cart->save();
 
         return redirect()->route('keranjang.index')

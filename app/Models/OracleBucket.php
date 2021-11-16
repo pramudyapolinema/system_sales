@@ -43,8 +43,8 @@ public function upload_file_oracle($bucket_name, $folder_name = '', $file_name)
     $s3 = $this->get_oracle_client($endpoint);
     $s3->getEndpoint();
 
-    // $file_url="https://objectstorage.ap-sydney-1.oraclecloud.com/p/u-hcWjArSMVg5WcYMlF0ewuyHvuHyyPpxZbhdUElLpqJjwYhDQJBp_xEJ3pGpumr/n/sdesiggjgjjm/b/system_sales/o/{$keyname}";
-    $file_url = "https://objectstorage.".ORACLE_REGION.".oraclecloud.com/p/u-hcWjArSMVg5WcYMlF0ewuyHvuHyyPpxZbhdUElLpqJjwYhDQJBp_xEJ3pGpumr/n/".ORACLE_NAMESPACE."/b/{$bucket_name}/o/{$keyname}";
+    //https://objectstorage.ap-sydney-1.oraclecloud.com/p/kJ8JsK-hh--vXO1V-tIG2hff75E5ovZtgvjuSiKopnn-4tF562uPtFyyOhE54hk2/n/sdesiggjgjjm/b/system_sales/o/
+    $file_url = "https://objectstorage.".ORACLE_REGION.".oraclecloud.com/p/kJ8JsK-hh--vXO1V-tIG2hff75E5ovZtgvjuSiKopnn-4tF562uPtFyyOhE54hk2/n/".ORACLE_NAMESPACE."/b/{$bucket_name}/o/{$keyname}";
     try {
         $s3->putObject(array(
             'Bucket' => $bucket_name,

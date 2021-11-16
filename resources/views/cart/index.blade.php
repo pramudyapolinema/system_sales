@@ -30,6 +30,7 @@
                                     <th scope="">Nama Produk</th>
                                     <th scope="">Jumlah</th>
                                     <th scope="">Aksi</th>
+                                    <th scope="">Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +38,7 @@
                                 @foreach ($keranjang as $a)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td><img width="100px" src="{{ asset('storage/'.$a->produk->foto_produk) }}" alt="fotoproduk"></td>
+                                    <td><img width="100px" src="{{ $a->produk->foto_produk }}" alt="fotoproduk"></td>
                                     <td>{{ $a->produk->nama_produk }}</td>
                                     <td>{{ $a->jumlah }}</td>
                                     <td>
@@ -51,6 +52,7 @@
                                             <button type="submit" class="btn btn-danger"><em class="fas fa-trash"></em></button>
                                         </form>
                                     </td>
+                                    <td><strong>@Rp{{ number_format($a->produk->harga, 0) }}</strong><br>Rp{{ number_format($a->total, 0) }}</td>
                                 </tr>
                                 <div class="modal fade" id="modal-edit{{$a->id}}">
                                     <div class="modal-dialog">
@@ -118,11 +120,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fotoprofil">Foto Produk</label><br>
-                                                    <img width="150px" src="{{ asset('storage/'.$a->produk->foto_produk) }}">
+                                                    <img width="150px" src="{{ $a->produk->foto_produk }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="email">Jumlah Pemesanan</label>
-                                                    <p>{{ $a->jumlaj }}</p>
+                                                    <p>{{ $a->jumlah }}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="level">Catatan</label>
@@ -143,6 +145,10 @@
                                     <!-- /.modal-dialog -->
                                 </div>
                                 @endforeach
+                                <tr>
+                                    <td colspan="5"><strong>Total Bayar</strong></td>
+                                    <td>Rp<strong>{{ number_format($total, 0) }}</strong></td>
+                                </tr>
                                 @else
                                 Tidak ada data
                                 @endif

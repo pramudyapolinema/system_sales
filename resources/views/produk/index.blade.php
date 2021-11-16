@@ -29,6 +29,7 @@
                                     <th>Nama Produk</th>
                                     <th>Deskripsi</th>
                                     <th>Foto</th>
+                                    <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <td>{{ $a->nama_produk }}</td>
                                     <td>{{ $a->deskripsi }}</td>
                                     <td><img width="100px" src="{{ $a->foto_produk }}"></td>
+                                    <td>Rp{{ number_format($a->harga, 0) }}</td>
                                     <td>
                                         <a data-toggle="modal" id="infoProduk" data-target="#modal-info{{$a->id}}"
                                             class="btn btn-info"><i class="fas fa-info-circle"></i></a>
@@ -78,6 +80,10 @@
                                                     <div class="form-group">
                                                         <label for="deskripsi">Deskripsi</label>
                                                         <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan deskripsi produk">{{ $a->deskripsi }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="harga">Harga</label>
+                                                        <input type="number" class="form-control" name="harga" id="harga" value="{{ $a->harga }}">
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="foto_produk">Foto Produk</label>
@@ -122,16 +128,16 @@
                                                     <p>{{ $a->deskripsi }}</p>
                                                 </div>
                                                 <div class="form-group">
+                                                    <label for="harga">Harga</label>
+                                                    <p>Rp{{ number_format($a->harga, 0) }}</p>
+                                                </div>
+                                                <div class="form-group">
                                                     <label for="fotoprofil">Foto Produk</label><br>
                                                     <img width="150px" src="{{ $a->foto_produk }}">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="dibuat">Dibuat pada</label><br>
                                                     <p>{{ $a->created_at }}</p>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="diupdate">Terakhir update</label><br>
-                                                    <p>{{ $a->updated_at }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -179,6 +185,10 @@
                     <div class="form-group">
                         <label for="deskripsi">Deskripsi</label>
                         <textarea class="form-control" name="deskripsi" id="deskripsi" placeholder="Masukkan deskripsi produk"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="harga">Harga</label>
+                        <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan harga produk">
                     </div>
                     <div class="form-group">
                         <label for="foto_produk">Foto Produk</label>

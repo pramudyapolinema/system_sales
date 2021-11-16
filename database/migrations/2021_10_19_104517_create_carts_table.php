@@ -19,6 +19,7 @@ class CreateCartsTable extends Migration
             $table->unsignedBigInteger('id_product');
             $table->integer('jumlah');
             $table->string('catatan', 100)->nullable();
+            $table->integer('total');
             $table->timestamps();
             $table->foreign('id_customer')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');

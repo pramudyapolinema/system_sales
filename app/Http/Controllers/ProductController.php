@@ -41,6 +41,7 @@ class ProductController extends Controller
         $request->validate([
             'nama_produk'   => 'required',
             'deskripsi'     => 'required',
+            'harga'         => 'required'
         ]);
 
         if ($request->file('foto_produk')) {
@@ -57,6 +58,7 @@ class ProductController extends Controller
         $produk->nama_produk = $request->get('nama_produk');
         $produk->deskripsi = $request->get('deskripsi');
         $produk->foto_produk = $image_name;
+        $produk->harga = $request->get('harga');
         $produk->save();
 
         return redirect()->route('produk.index')
@@ -97,15 +99,17 @@ class ProductController extends Controller
         $request->validate([
             'nama_produk'   => 'required',
             'deskripsi'     => 'required',
+            'harga'         => 'required'
         ]);
 
         $produk = Product::find($id);
 
         if ($request->has('foto_produk')) {
-            if($produk->foto_produk != 'images/products/produk.png' && file_exists(storage_path('app/public/'.$produk->foto_produk))) {
-                Storage::delete('public/'.$produk->foto_produk);
-            }
-            $image_name = $request->file('foto_produk')->store('images/products', 'public');
+            $file = $request->file('foto_produk');
+            $name = rand().'.'.$file->getClientOriginalName();
+            $file->move('images/products', $name);
+            $cloud = new OracleBucket;
+            $image_name = $cloud->upload_file_oracle('system_sales', 'images', 'images/products/'.$name);
             $produk->foto_produk = $image_name;
         } else {
             $image_name = 'images/products/produk.png';
@@ -113,6 +117,7 @@ class ProductController extends Controller
 
         $produk->nama_produk = $request->get('nama_produk');
         $produk->deskripsi = $request->get('deskripsi');
+        $produk->harga = $request->get('harga');
         $produk->save();
 
         return redirect()->route('produk.index')

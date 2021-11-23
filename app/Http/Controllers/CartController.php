@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -17,11 +18,13 @@ class CartController extends Controller
     {
         $produk = Product::all();
         $keranjang = Cart::where('id_customer', auth()->user()->id)->get();
+        $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
+        $notrans = "T" . sprintf("%06d", $transaksi+1);
         $total = 0;
         foreach($keranjang as $k){
             $total = $total + $k->total;
         }
-        return view('cart.index', compact('keranjang', 'produk', 'total'));
+        return view('cart.index', compact('keranjang', 'produk', 'total', 'notrans'));
     }
 
     /**

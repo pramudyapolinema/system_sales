@@ -92,6 +92,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('checkout.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Transaksi
+                        </p>
+                    </a>
+                </li>
                 @endif
                 {{-- @if (auth()->user()->level == "kasir" || auth()->user()->level == "admin")
                 <li class="nav-header">KASIR</li>

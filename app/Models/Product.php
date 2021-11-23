@@ -13,6 +13,7 @@ class Product extends Model
         'nama_produk',
         'deskripsi',
         'foto_produk',
+        'berat',
         'harga',
     ];
 }

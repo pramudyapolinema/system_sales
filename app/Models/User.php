@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'alamat',
+        'provinsi',
+        'kota_kabupaten',
     ];
 
     /**

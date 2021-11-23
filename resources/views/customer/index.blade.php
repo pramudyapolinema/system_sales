@@ -88,7 +88,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat">{{ $a->alamat }}</textarea>
+                                                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat">{{ $a->alamat }}, {{ $a->kota_kabupaten }}, {{ $a->provinsi }}</textarea>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="password">Password</label>

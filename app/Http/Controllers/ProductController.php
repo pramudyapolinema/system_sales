@@ -41,7 +41,8 @@ class ProductController extends Controller
         $request->validate([
             'nama_produk'   => 'required',
             'deskripsi'     => 'required',
-            'harga'         => 'required'
+            'harga'         => 'required',
+            'berat'         => 'required',
         ]);
 
         if ($request->file('foto_produk')) {
@@ -59,6 +60,7 @@ class ProductController extends Controller
         $produk->deskripsi = $request->get('deskripsi');
         $produk->foto_produk = $image_name;
         $produk->harga = $request->get('harga');
+        $produk->berat = $request->get('berat');
         $produk->save();
 
         return redirect()->route('produk.index')
@@ -99,7 +101,8 @@ class ProductController extends Controller
         $request->validate([
             'nama_produk'   => 'required',
             'deskripsi'     => 'required',
-            'harga'         => 'required'
+            'harga'         => 'required',
+            'berat'         => 'required',
         ]);
 
         $produk = Product::find($id);
@@ -118,6 +121,7 @@ class ProductController extends Controller
         $produk->nama_produk = $request->get('nama_produk');
         $produk->deskripsi = $request->get('deskripsi');
         $produk->harga = $request->get('harga');
+        $produk->berat = $request->get('berat');
         $produk->save();
 
         return redirect()->route('produk.index')

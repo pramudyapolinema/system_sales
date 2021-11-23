@@ -35,7 +35,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if ($pelanggan)
+                                @if ( count($pelanggan) > 0)
                                 @foreach ($pelanggan as $a)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
@@ -88,7 +88,25 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="alamat">Alamat</label>
-                                                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat">{{ $a->alamat }}, {{ $a->kota_kabupaten }}, {{ $a->provinsi }}</textarea>
+                                                        <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat">{{ $a->alamat }}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="provinsi">Provinsi</label>
+                                                        <select id="provinsi" class="form-control select2" >
+                                                            <option hidden selected>Pilih Provinsi</option>
+                                                            @foreach ($provinces as $id => $name)
+                                                                <option value="{{ $id }}" {{ $a->provinsi == $id?'selected':'' }}>{{ ucwords(strtolower($name)) }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="Kota">Kota</label>
+                                                        <select name="kota_kabupaten" id="kota_kabupaten" class="form-control select2">
+                                                            <option hidden selected>Pilih Provinsi Dulu!</option>
+                                                            @foreach ($cities as $id => $name)
+                                                                <option value="{{ $id }}" {{ $a->kota_kabupaten == $id?'selected':'' }}>{{ ucwords(strtolower($name)) }}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="password">Password</label>
@@ -125,9 +143,7 @@
                                             </div>
                                             </form>
                                         </div>
-                                        <!-- /.modal-content -->
                                     </div>
-                                    <!-- /.modal-dialog -->
                                 </div>
                                 <div class="modal fade" id="modal-info{{$a->id}}">
                                     <div class="modal-dialog">
@@ -154,7 +170,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="alamat">Alamat</label>
-                                                    <p>{{ $a->alamat }}</p>
+                                                    <p>{{ $a->alamat }}, {{ $a->kota->name }}, {{ $a->province->name }}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="level">Level</label>
@@ -225,6 +241,21 @@
                         <textarea name="alamat" id="alamat" class="form-control" placeholder="Masukkan alamat"></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="provinsi">Provinsi</label>
+                        <select name="provinsi" id="provinsi-register" class="form-control select2">
+                            <option hidden selected>Pilih Provinsi</option>
+                            @foreach ($provinces as $id => $name)
+                                <option value="{{ $id }}">{{ ucwords(strtolower($name)) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="kota_kabupaten">Kota / Kabupaten</label>
+                        <select name="kota_kabupaten" id="kota_kabupaten_register" class="form-control select2">
+                            <option hidden selected>Pilih Provinsi Dulu!</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password"
                             placeholder="Masukkan password">
@@ -258,4 +289,39 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+@endsection
+@section('customjs')
+<script>
+    function onChangeSelect(url, id, name) {
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function (data) {
+                $('#' + name).empty();
+                $('#' + name).append('<option hidden selected>Pilih Kota!</option>');
+
+                $.each(data, function (key, value) {
+                    $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+                });
+            }
+        });
+    }
+    $(function () {
+        $('#provinsi-register').on('change', function () {
+            onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota_kabupaten_register');
+        });
+        // $('#provinsi').on('change', function () {
+        //     onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota_kabupaten');
+        // });
+        // $('#kota_kabupaten').on('change', function () {
+        //     onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
+        // })
+        // $('#kecamatan').on('change', function () {
+        //     onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
+        // })
+    });
+</script>
 @endsection

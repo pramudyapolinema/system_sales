@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DependentDropdownController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
@@ -37,3 +38,7 @@ Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('provinces', [DependentDropdownController::class, 'provinces'])->name('provinces');
+Route::get('cities', [DependentDropdownController::class, 'cities'])->name('cities');
+Route::get('districts', [DependentDropdownController::class, 'districts'])->name('districts');
+Route::get('villages', [DependentDropdownController::class, 'villages'])->name('villages');

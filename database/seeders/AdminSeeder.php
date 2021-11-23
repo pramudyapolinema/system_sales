@@ -22,8 +22,8 @@ class AdminSeeder extends Seeder
             'email' => 'admin@proyek.com',
             'phone' => '-',
             'alamat' => '-',
-            'provinsi' => 'Jawa Timur',
-            'kota_kabupaten' => 'Probolinggo',
+            'provinsi' => '15',
+            'kota_kabupaten' => '260',
             'password' => bcrypt('admin'),
             'remember_token' => Str::random(10)
         ]);

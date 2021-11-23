@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravolt\Indonesia\Models\Province;
+use Laravolt\Indonesia\Models\City;
 
 class CustomerController extends Controller
 {
@@ -17,8 +19,19 @@ class CustomerController extends Controller
     public function index()
     {
         $pelanggan = User::where('level', 'pelanggan')->get();
-        return view('customer.index', compact('pelanggan'));
+        $provinces = Province::pluck('name', 'id');
+        $cities = City::pluck('name', 'id');
+        return view('customer.index', compact('pelanggan', 'provinces', 'cities'));
     }
+
+    public function cities(Request $request)
+    {
+        $cities = City::where('province_id', $request->get('id'))
+            ->pluck('name', 'id');
+
+        return response()->json($cities);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -45,6 +58,8 @@ class CustomerController extends Controller
             'level'     => 'required',
             'phone'     => 'required',
             'alamat'    => 'required',
+            'provinsi'  => 'required',
+            'kota_kabupaten'      => 'required',
         ]);
 
         if($request->file('fotoprofil')){
@@ -58,6 +73,8 @@ class CustomerController extends Controller
         $user->email = $request->get('email');
         $user->phone = $request->get('phone');
         $user->alamat = $request->get('alamat');
+        $user->provinsi = $request->get('provinsi');
+        $user->kota_kabupaten = $request->get('kota_kabupaten');
         $user->password = bcrypt($request->get('password'));
         $user->fotoprofil = $image_name;
         $user->level = $request->get('level');

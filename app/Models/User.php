@@ -49,4 +49,12 @@ class User extends Authenticatable
     public function keranjang() {
         return $this->hasMany(Cart::class);
     }
+
+    public function province() {
+        return $this->belongsTo(IndonesiaProvince::class, 'provinsi', 'id');
+    }
+
+    public function kota() {
+        return $this->belongsTo(IndonesiaCity::class, 'kota_kabupaten', 'id');
+    }
 }

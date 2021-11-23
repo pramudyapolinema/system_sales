@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\ProductTransaction;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -41,19 +42,29 @@ class TransactionController extends Controller
         $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
         $notrans = "T" . sprintf("%06d", $transaksi+1);
         $total = 0;
+        $berat = 0;
         foreach($keranjang as $k){
-            $total = $total + $k->total;
+            $total = $total + $k->produk->harga * $k->jumlah;
+            $berat = $berat + $k->produk->berat * $k->jumlah;
         }
-        foreach ($keranjang as $k) {
-            $trans = new Transaction;
-            $trans->id_transaksi = $notrans;
-            $trans->id_customer = $k->id_customer;
-            $trans->id_product = $k->id_product;
-            $trans->jumlah = $k->jumlah;
-            $trans->catatan = $k->catatan;
-            $trans->total = $k->total;
-            $trans->total_bayar = $total + 8000;
-            $trans->save();
+        $ongkir = round($berat/1000) * 8000;
+        $trans = new Transaction;
+        $trans->id_transaksi = $notrans;
+        $trans->id_customer = auth()->user()->id;
+        $trans->berat = $berat;
+        $trans->ongkir = $ongkir;
+        $trans->total_bayar = $total + $ongkir;
+        $trans->status = 'Menunggu';
+        $trans->save();
+        foreach($keranjang as $k){
+            $prodtrans = new ProductTransaction;
+            $prodtrans->id_transaksi = $notrans;
+            $prodtrans->id_product = $k->id;
+            $prodtrans->jumlah = $k->jumlah;
+            $prodtrans->catatan = $k->catatan;
+            $prodtrans->total = $k->produk->harga * $k->jumlah;
+            $prodtrans->total_berat = $k->produk->berat * $k->jumlah;
+            $prodtrans->save();
             Cart::find($k->id)->delete();
         }
         return redirect()->route('keranjang.index')

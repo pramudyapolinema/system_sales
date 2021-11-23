@@ -14,6 +14,7 @@ class Transaction extends Model
         'berat',
         'ongkir',
         'total_bayar',
+        'status',
     ];
 
     public function pelanggan() {

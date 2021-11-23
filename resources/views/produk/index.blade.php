@@ -86,6 +86,10 @@
                                                         <input type="number" class="form-control" name="harga" id="harga" value="{{ $a->harga }}">
                                                     </div>
                                                     <div class="form-group">
+                                                        <label for="berat">Berat (gram)</label>
+                                                        <input type="number" class="form-control" name="berat" id="berat" value="{{ $a->berat }}">
+                                                    </div>
+                                                    <div class="form-group">
                                                         <label for="foto_produk">Foto Produk</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
@@ -130,6 +134,10 @@
                                                 <div class="form-group">
                                                     <label for="harga">Harga</label>
                                                     <p>Rp{{ number_format($a->harga, 0) }}</p>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="berat">Berat</label>
+                                                    <p>{{ number_format($a->berat, 0) }} gr</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="fotoprofil">Foto Produk</label><br>
@@ -189,6 +197,10 @@
                     <div class="form-group">
                         <label for="harga">Harga</label>
                         <input type="number" class="form-control" name="harga" id="harga" placeholder="Masukkan harga produk">
+                    </div>
+                    <div class="form-group">
+                        <label for="berat">Berat (gram)</label>
+                        <input type="number" class="form-control" name="berat" id="berat" placeholder="Masukkan berat produk">
                     </div>
                     <div class="form-group">
                         <label for="foto_produk">Foto Produk</label>

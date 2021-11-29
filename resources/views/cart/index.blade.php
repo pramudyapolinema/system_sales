@@ -252,8 +252,9 @@
                                             <address>
                                                 <strong>Admin</strong><br>
                                                 Jalan Puyengan No.25A<br>
-                                                Jati, Probolinggo<br>
-                                                Phone: (+62) 81233355174<br>
+                                                KOTA PROBOLINGGO<br>
+                                                JAWA TIMUR<br>
+                                                081233355174<br>
                                             </address>
                                         </div>
                                         <!-- /.col -->
@@ -262,7 +263,9 @@
                                             <address>
                                                 <strong>{{ Auth::user()->name }}</strong><br>
                                                 {{ Auth::user()->alamat }}<br>
-                                                {{ Auth::user()->phone }}<br><br>
+                                                {{ Auth::user()->city->name }}<br>
+                                                {{ Auth::user()->province->name }}<br>
+                                                {{ Auth::user()->phone }}<br>
                                             </address>
                                         </div>
                                         <!-- /.col -->
@@ -330,11 +333,11 @@
                                                     </tr>
                                                     <tr>
                                                         <th>Ongkos Kirim:</th>
-                                                        <td>Rp{{ number_format(8000, 0); }}</td>
+                                                        <td>Rp{{ number_format($ongkir,0) }} </td>
                                                     </tr>
                                                     <tr>
                                                         <th>Total:</th>
-                                                        <td>Rp{{ number_format($total+8000,0); }}</td>
+                                                        <td>Rp{{ number_format($total+$ongkir,0) }}</td>
                                                     </tr>
                                                 </table>
                                             </div>

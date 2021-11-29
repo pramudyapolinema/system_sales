@@ -6,8 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Laravolt\Indonesia\Models\Province;
-use Laravolt\Indonesia\Models\City;
+use App\Models\Province;
+use App\Models\City;
 
 class CustomerController extends Controller
 {
@@ -19,19 +19,16 @@ class CustomerController extends Controller
     public function index()
     {
         $pelanggan = User::where('level', 'pelanggan')->get();
-        $provinces = Province::pluck('name', 'id');
+        $provinces = Province::pluck('name', 'province_id');
         $cities = City::pluck('name', 'id');
         return view('customer.index', compact('pelanggan', 'provinces', 'cities'));
     }
 
-    public function cities(Request $request)
+    public function getCities($id)
     {
-        $cities = City::where('province_id', $request->get('id'))
-            ->pluck('name', 'id');
-
-        return response()->json($cities);
+        $city = City::where('province_id', $id)->pluck('name', 'city_id');
+        return response()->json($city);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -59,7 +56,7 @@ class CustomerController extends Controller
             'phone'     => 'required',
             'alamat'    => 'required',
             'provinsi'  => 'required',
-            'kota_kabupaten'      => 'required',
+            'kota'      => 'required',
         ]);
 
         if($request->file('fotoprofil')){
@@ -74,7 +71,7 @@ class CustomerController extends Controller
         $user->phone = $request->get('phone');
         $user->alamat = $request->get('alamat');
         $user->provinsi = $request->get('provinsi');
-        $user->kota_kabupaten = $request->get('kota_kabupaten');
+        $user->kota = $request->get('kota');
         $user->password = bcrypt($request->get('password'));
         $user->fotoprofil = $image_name;
         $user->level = $request->get('level');
@@ -122,6 +119,8 @@ class CustomerController extends Controller
             'level'     => 'required',
             'phone'     => 'required',
             'alamat'    => 'required',
+            'provinsi'  => 'required',
+            'kota'      => 'required',
         ]);
 
         $user = User::find($id);
@@ -138,6 +137,8 @@ class CustomerController extends Controller
         $user->email = $request->get('email');
         $user->phone = $request->get('phone');
         $user->alamat = $request->get('alamat');
+        $user->provinsi = $request->get('provinsi');
+        $user->kota = $request->get('kota');
         $user->level = $request->get('level');
         if($request->filled('password')){
             $user->password = bcrypt($request->get('password'));

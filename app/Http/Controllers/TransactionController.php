@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\ProductTransaction;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 
 class TransactionController extends Controller
 {
@@ -47,7 +48,7 @@ class TransactionController extends Controller
             $total = $total + $k->produk->harga * $k->jumlah;
             $berat = $berat + $k->produk->berat * $k->jumlah;
         }
-        $ongkir = round($berat/1000) * 8000;
+        $ongkir = $this->check_ongkir(auth()->user()->kota, $berat);
         $trans = new Transaction;
         $trans->id_transaksi = $notrans;
         $trans->id_customer = auth()->user()->id;
@@ -69,6 +70,28 @@ class TransactionController extends Controller
         }
         return redirect()->route('keranjang.index')
             ->with('success', 'Checkout anda berhasil!');
+    }
+
+    public function check_ongkir($kota, $berat)
+    {
+        $cost = RajaOngkir::ongkosKirim([
+            'origin'        => 370, // ID kota/kabupaten asal
+            'destination'   => $kota, // ID kota/kabupaten tujuan
+            'weight'        => $berat, // berat barang dalam gram
+            'courier'       => 'jne' // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+        ])->get();
+
+        $json = json_encode($cost);
+        $data = json_decode($json, true);
+
+        $data2 = json_encode($data[0]['costs']);
+        $data3 = json_decode($data2, true);
+        $data4 = $data3[0]['cost'];
+
+        $data5 = json_encode($data4[0]['value']);
+        $data6 = json_decode($data5, true);
+
+        return $data6;
     }
 
     /**

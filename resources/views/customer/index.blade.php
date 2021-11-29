@@ -92,19 +92,19 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="provinsi">Provinsi</label>
-                                                        <select id="provinsi" class="form-control select2" >
+                                                        <select name="provinsi" id="provinsi-edit" class="form-control" >
                                                             <option hidden selected>Pilih Provinsi</option>
-                                                            @foreach ($provinces as $id => $name)
-                                                                <option value="{{ $id }}" {{ $a->provinsi == $id?'selected':'' }}>{{ ucwords(strtolower($name)) }}</option>
+                                                            @foreach ($provinces as $province => $value)
+                                                                <option value="{{ $province }}">{{ $value }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="Kota">Kota</label>
-                                                        <select name="kota_kabupaten" id="kota_kabupaten" class="form-control select2">
+                                                        <select name="kota" id="kota-edit" class="form-control">
                                                             <option hidden selected>Pilih Provinsi Dulu!</option>
                                                             @foreach ($cities as $id => $name)
-                                                                <option value="{{ $id }}" {{ $a->kota_kabupaten == $id?'selected':'' }}>{{ ucwords(strtolower($name)) }}</option>
+                                                                <option value="{{ $id }}">{{ $name .'-'. $id }}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -170,7 +170,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="alamat">Alamat</label>
-                                                    <p>{{ $a->alamat }}, {{ $a->kota->name }}, {{ $a->province->name }}</p>
+                                                    <p>{{ $a->alamat }}, {{ $a->city->name }}, {{ $a->province->name }}</p>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="level">Level</label>
@@ -242,7 +242,7 @@
                     </div>
                     <div class="form-group">
                         <label for="provinsi">Provinsi</label>
-                        <select name="provinsi" id="provinsi-register" class="form-control select2">
+                        <select name="provinsi" id="provinsi-register" class="form-control">
                             <option hidden selected>Pilih Provinsi</option>
                             @foreach ($provinces as $id => $name)
                                 <option value="{{ $id }}">{{ ucwords(strtolower($name)) }}</option>
@@ -250,8 +250,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="kota_kabupaten">Kota / Kabupaten</label>
-                        <select name="kota_kabupaten" id="kota_kabupaten_register" class="form-control select2">
+                        <label for="kota">Kota / Kabupaten</label>
+                        <select name="kota" id="kota-register" class="form-control">
                             <option hidden selected>Pilih Provinsi Dulu!</option>
                         </select>
                     </div>
@@ -292,36 +292,46 @@
 @endsection
 @section('customjs')
 <script>
-    function onChangeSelect(url, id, name) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function (data) {
-                $('#' + name).empty();
-                $('#' + name).append('<option hidden selected>Pilih Kota!</option>');
-
-                $.each(data, function (key, value) {
-                    $('#' + name).append('<option value="' + key + '">' + value + '</option>');
+    $(document).ready(function(){
+        //ajax select kota edit
+        $('#provinsi-edit').on('change', function () {
+            let provindeId = $(this).val();
+            if (provindeId) {
+                jQuery.ajax({
+                    url: '/cities/'+provindeId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        $('#kota-edit').empty();
+                        $('#kota-edit').append('<option value="" selected hidden>Pilih Kota</option>');
+                        $.each(response, function (key, value) {
+                            $('#kota-edit').append('<option value="' + key + '">' + value + ' - ' + key + '</option>');
+                        });
+                    },
                 });
+            } else {
+                $('#kota-edit').append('<option value="">Pilih Kota</option>');
             }
         });
-    }
-    $(function () {
         $('#provinsi-register').on('change', function () {
-            onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota_kabupaten_register');
+            let provindeId = $(this).val();
+            if (provindeId) {
+                jQuery.ajax({
+                    url: '/cities/'+provindeId,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (response) {
+                        $('#kota-register').empty();
+                        $('#kota-register').append('<option value="" selected hidden>Pilih Kota</option>');
+                        $.each(response, function (key, value) {
+                            $('#kota-register').append('<option value="' + key + '">' + value + ' - ' + key + '</option>');
+                        });
+                    },
+                });
+            } else {
+                $('#kota-register').append('<option value="">Pilih Kota</option>');
+            }
         });
-        // $('#provinsi').on('change', function () {
-        //     onChangeSelect('{{ route("cities") }}', $(this).val(), 'kota_kabupaten');
-        // });
-        // $('#kota_kabupaten').on('change', function () {
-        //     onChangeSelect('{{ route("districts") }}', $(this).val(), 'kecamatan');
-        // })
-        // $('#kecamatan').on('change', function () {
-        //     onChangeSelect('{{ route("villages") }}', $(this).val(), 'desa');
-        // })
     });
 </script>
 @endsection

@@ -1,15 +1,11 @@
 @include('layouts.stylesheet')
-<!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
     <a href="{{ route('home') }}" class="brand-link">
         <img src="{{ asset('assets/AdminLTE/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">System Sales</span>
     </a>
 
-    <!-- Sidebar -->
     <div class="sidebar">
-        <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
                 <img src="{{ asset('storage/'. Auth::user()->fotoprofil) }}" class="img-circle elevation-2" alt="User Image">
@@ -19,7 +15,6 @@
             </div>
         </div>
 
-        <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
@@ -31,11 +26,8 @@
             </div>
         </div>
 
-        <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
                 <li class="nav-item">
                     <a href="{{ route('logout')}}" class="nav-link">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -46,8 +38,8 @@
                 </li>
                 @if (auth()->user()->level == "admin")
                 <li class="nav-header">ADMIN</li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
+                <li class="nav-item {{ (request()->is('admin')) ? 'menu-open' : '' }} {{ (request()->is('pelanggan')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('admin')) ? 'active' : '' }} {{ (request()->is('pelanggan')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             User
@@ -56,65 +48,21 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.index') }}" class="nav-link">
+                            <a href="{{ route('admin.index') }}" class="nav-link {{ (request()->is('admin')) ? 'active' : '' }}">
                                 <i class="far fa-crown nav-icon"></i>
                                 <p>Admin</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pelanggan.index') }}" class="nav-link">
+                            <a href="{{ route('pelanggan.index') }}" class="nav-link {{ (request()->is('pelanggan')) ? 'active' : '' }}">
                                 <i class="far fa-cog nav-icon"></i>
                                 <p>Pelanggan</p>
                             </a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a href="{{ route('kasir.index') }}" class="nav-link">
-                                <i class="far fa-money-check nav-icon"></i>
-                                <p>Kasir</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('alluser.index') }}" class="nav-link">
-                                <i class="far fa-users nav-icon"></i>
-                                <p>All User</p>
-                            </a>
-                        </li> --}}
                     </ul>
                 </li>
-                @endif
-                @if (auth()->user()->level == "pelanggan")
-                <li class="nav-header">Pelanggan</li>
                 <li class="nav-item">
-                    <a href="{{ route('keranjang.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Keranjang
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('checkout.index')}}" class="nav-link">
-                        <i class="nav-icon fas fa-wallet"></i>
-                        <p>
-                            Transaksi
-                        </p>
-                    </a>
-                </li>
-                @endif
-                {{-- @if (auth()->user()->level == "kasir" || auth()->user()->level == "admin")
-                <li class="nav-header">KASIR</li>
-                <li class="nav-item">
-                    <a href="{{ route('pesanan.index') }}" class="nav-link">
-                        <i class="nav-icon fas fa-shopping-cart"></i>
-                        <p>
-                            Pesanan
-                        </p>
-                    </a>
-                </li>
-                @endif --}}
-                @if (auth()->user()->level == 'pelanggan' || auth()->user()->level == 'admin')
-                <li class="nav-item">
-                    <a href="{{ route('produk.index') }}" class="nav-link">
+                    <a href="{{ route('produk.index') }}" class="nav-link {{ (request()->is('produk')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>
                         <p>
                             Produk
@@ -122,9 +70,34 @@
                     </a>
                 </li>
                 @endif
+                @if (auth()->user()->level == "pelanggan")
+                <li class="nav-header">Pelanggan</li>
+                <li class="nav-item">
+                    <a href="{{ route('produk.index') }}" class="nav-link {{ (request()->is('produk')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            Produk
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('keranjang.index')}}" class="nav-link {{ (request()->is('keranjang')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-shopping-cart"></i>
+                        <p>
+                            Keranjang
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('checkout.index')}}" class="nav-link {{ (request()->is('checkout')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Transaksi
+                        </p>
+                    </a>
+                </li>
+                @endif
             </ul>
         </nav>
-        <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
 </aside>

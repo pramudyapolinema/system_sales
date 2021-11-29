@@ -22,9 +22,21 @@ class AdminSeeder extends Seeder
             'email' => 'admin@proyek.com',
             'phone' => '-',
             'alamat' => '-',
-            'provinsi' => '15',
-            'kota_kabupaten' => '260',
+            'provinsi' => '11',
+            'kota' => '370',
             'password' => bcrypt('admin'),
+            'remember_token' => Str::random(10)
+        ]);
+        DB::table('users')->insert([
+            'name' => 'user',
+            'level' => 'pelanggan',
+            'fotoprofil' => 'images/user_profile/user.png',
+            'email' => 'user@proyek.com',
+            'phone' => '08567890123',
+            'alamat' => 'Jl. Yang Benar No. 1',
+            'provinsi' => '11',
+            'kota' => '370',
+            'password' => bcrypt('user'),
             'remember_token' => Str::random(10)
         ]);
     }

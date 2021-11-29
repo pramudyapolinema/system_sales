@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Kavist\RajaOngkir\Facades\RajaOngkir;
 
 class CartController extends Controller
 {
@@ -21,10 +22,38 @@ class CartController extends Controller
         $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
         $notrans = "T" . sprintf("%06d", $transaksi+1);
         $total = 0;
+        $berat = 0;
+        $ongkir = 0;
         foreach($keranjang as $k){
             $total = $total + $k->total;
+            $berat = $berat + $k->produk->berat * $k->jumlah;
         }
-        return view('cart.index', compact('keranjang', 'produk', 'total', 'notrans'));
+        if(count($keranjang) > 0){
+            $ongkir = $this->check_ongkir(auth()->user()->kota, $berat);
+        }
+        return view('cart.index', compact('keranjang', 'produk', 'total', 'notrans', 'ongkir'));
+    }
+
+    public function check_ongkir($kota, $berat)
+    {
+        $cost = RajaOngkir::ongkosKirim([
+            'origin'        => 370, // ID kota/kabupaten asal
+            'destination'   => $kota, // ID kota/kabupaten tujuan
+            'weight'        => $berat, // berat barang dalam gram
+            'courier'       => 'jne' // kode kurir pengiriman: ['jne', 'tiki', 'pos'] untuk starter
+        ])->get();
+
+        $json = json_encode($cost);
+        $data = json_decode($json, true);
+
+        $data2 = json_encode($data[0]['costs']);
+        $data3 = json_decode($data2, true);
+        $data4 = $data3[0]['cost'];
+
+        $data5 = json_encode($data4[0]['value']);
+        $data6 = json_decode($data5, true);
+
+        return $data6;
     }
 
     /**

@@ -24,7 +24,7 @@ class User extends Authenticatable
         'phone',
         'alamat',
         'provinsi',
-        'kota_kabupaten',
+        'kota',
     ];
 
     /**
@@ -51,10 +51,10 @@ class User extends Authenticatable
     }
 
     public function province() {
-        return $this->belongsTo(IndonesiaProvince::class, 'provinsi', 'id');
+        return $this->belongsTo(Province::class, 'provinsi', 'province_id');
     }
 
-    public function kota() {
-        return $this->belongsTo(IndonesiaCity::class, 'kota_kabupaten', 'id');
+    public function city() {
+        return $this->belongsTo(City::class, 'kota', 'city_id');
     }
 }

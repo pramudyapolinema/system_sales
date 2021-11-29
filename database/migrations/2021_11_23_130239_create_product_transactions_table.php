@@ -15,13 +15,13 @@ class CreateProductTransactionsTable extends Migration
     {
         Schema::create('product_transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_transaksi');
+            $table->string('id_transaksi', 7);
             $table->unsignedBigInteger('id_product');
             $table->integer('jumlah');
             $table->text('catatan')->nullable();
             $table->integer('total_berat');
             $table->integer('total');
-            $table->foreign('id_transaksi')->references('id')->on('transactions')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('id_transaksi')->references('id')->on('transactions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();

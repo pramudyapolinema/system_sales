@@ -38,7 +38,6 @@ Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/postlogin', [LoginController::class, 'postlogin'])->name('postlogin');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('provinces', [DependentDropdownController::class, 'provinces'])->name('provinces');
-Route::get('cities', [DependentDropdownController::class, 'cities'])->name('cities');
-Route::get('districts', [DependentDropdownController::class, 'districts'])->name('districts');
-Route::get('villages', [DependentDropdownController::class, 'villages'])->name('villages');
+Route::get('/cities/{province_id}', [CustomerController::class, 'getCities']);
+
+Route::get('/ongkir', [CartController::class, 'get_ongkir'])->name('ongkir');

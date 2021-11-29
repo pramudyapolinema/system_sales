@@ -54,6 +54,10 @@
                                                 <button type="submit" class="btn btn-danger"><i
                                                         class="fas fa-trash"></i></button>
                                             </form>
+                                        @else
+                                        <a data-toggle="modal" id="updateProduk" data-target="#modal-add-to-cart{{$a->id}}"
+                                            class="btn btn-success"><i class="fas fa-shopping-cart"></i></a>
+                                        </form>
                                         @endif
                                     </td>
                                 </tr>
@@ -152,6 +156,50 @@
                                         <!-- /.modal-content -->
                                     </div>
                                     <!-- /.modal-dialog -->
+                                </div>
+                                <div class="modal fade" id="modal-add-to-cart{{$a->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Masukkan Produk ke Keranjang</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('keranjang.store') }}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="id_product">Produk</label>
+                                                        <select class="form-control" name="id_product" id="id_product" required>
+                                                            <option selected hidden>Silahkan pilih produk</option>
+                                                            @if (count($produk) > 0)
+                                                            @foreach ($produk as $p)
+                                                            <option value="{{ $p->id }}" {{ $a->id == $p->id ? 'selected':'' }}>{{ $p->nama_produk }}</option>
+                                                            @endforeach
+                                                            @else
+                                                            <option>Produk belum tersedia!</option>
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jumlah">Jumlah</label>
+                                                        <input type="number" class="form-control" name="jumlah" id="jumlah" min="1"
+                                                            placeholder="Masukkan jumlah!" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="catatan">Catatan</label>
+                                                        <textarea class="form-control" name="catatan" id="catatan"
+                                                            placeholder="masukkan catatan..."></textarea>
+                                                    </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                                 @endforeach
                                 @else

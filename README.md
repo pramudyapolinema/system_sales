@@ -36,8 +36,8 @@ php artisan migrate
 ```
 ### Seeding
 ```
-php artisan laravolt:indonesia:seed
-php artisan db:seed --class=AdminSeeder
+php artisan db:seed --class=LocationSeeder
+php artisan db:seed --class=UserSeeder
 ```
 ### Run Laravel
 ```
@@ -48,3 +48,4 @@ php artisan serve
 localhost:8000
 ```
 * Use email : admin@proyek.com and password : admin
+* Use email : user@proyek.com and password : user

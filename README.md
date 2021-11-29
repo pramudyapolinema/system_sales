@@ -19,9 +19,10 @@ Build
 ```
 git clone https://github.com/pramudyapolinema/system_sales.git
 ```
-### NPM Setup
+### NPM & composer Setup
 ```
 npm install
+composer install
 ```
 ### Environtment Setting
 * Copy .env.example to .env

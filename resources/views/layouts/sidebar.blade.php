@@ -11,7 +11,7 @@
                 <img src="{{ asset('storage/'. Auth::user()->fotoprofil) }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+                <a href="{{ route('profile') }}" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -72,6 +72,14 @@
                 @endif
                 @if (auth()->user()->level == "pelanggan")
                 <li class="nav-header">Pelanggan</li>
+                <li class="nav-item">
+                    <a href="{{ route('profile') }}" class="nav-link {{ (request()->is('profile')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Profil
+                        </p>
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('produk.index') }}" class="nav-link {{ (request()->is('produk')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>

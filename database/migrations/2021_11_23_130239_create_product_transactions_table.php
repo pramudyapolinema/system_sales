@@ -23,7 +23,6 @@ class CreateProductTransactionsTable extends Migration
             $table->integer('total');
             // $table->foreign('id_transaksi')->references('id')->on('transactions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_product')->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
-
             $table->timestamps();
         });
     }

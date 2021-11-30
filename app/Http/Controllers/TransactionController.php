@@ -60,7 +60,7 @@ class TransactionController extends Controller
         foreach($keranjang as $k){
             $prodtrans = new ProductTransaction;
             $prodtrans->id_transaksi = $notrans;
-            $prodtrans->id_product = $k->id;
+            $prodtrans->id_product = $k->produk->id;
             $prodtrans->jumlah = $k->jumlah;
             $prodtrans->catatan = $k->catatan;
             $prodtrans->total = $k->produk->harga * $k->jumlah;
@@ -68,7 +68,7 @@ class TransactionController extends Controller
             $prodtrans->save();
             Cart::find($k->id)->delete();
         }
-        return redirect()->route('keranjang.index')
+        return redirect()->route('checkout.index')
             ->with('success', 'Checkout anda berhasil!');
     }
 

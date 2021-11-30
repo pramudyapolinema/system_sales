@@ -48,15 +48,11 @@
                                         @if (auth()->user()->level == 'admin')
                                             <a data-toggle="modal" id="updateProduk" data-target="#modal-edit{{$a->id}}"
                                                 class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                            <form action="{{ route('produk.destroy', $a->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
+                                            <a data-toggle="modal" id="deleteProduk" data-target="#modal-delete{{$a->id}}"
+                                                class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                         @else
                                         <a data-toggle="modal" id="updateProduk" data-target="#modal-add-to-cart{{$a->id}}"
-                                            class="btn btn-success"><i class="fas fa-shopping-cart"></i></a>
+                                            class="btn btn-success"><i class="fas fa-cart-plus"></i></a>
                                         </form>
                                         @endif
                                     </td>
@@ -197,6 +193,31 @@
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="modal-delete{{$a->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-judul">Hapus produk {{ $a->nama_produk }}</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Anda yakin menghapus produk tersebut dari daftar produk?</p>
+                                            </div>
+                                            <form action="{{ route('produk.destroy', $a->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-danger">Submit</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

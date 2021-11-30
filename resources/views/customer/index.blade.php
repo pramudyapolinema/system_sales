@@ -61,7 +61,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="modal-judul">Edit data {{ $a->name }}</h4>
-                                                <button type="button" class="close" data-dismiss="modal"
+                                                <button type="button" class="close" data-dismiss="modal-edit{{$a->id}}"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -138,7 +138,7 @@
                                             </div>
                                             <div class="modal-footer justify-content-between">
                                                 <button type="button" class="btn btn-default"
-                                                    data-dismiss="modal">Close</button>
+                                                    data-dismiss="modal-edit{{$a->id}}">Close</button>
                                                 <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                             </form>
@@ -190,9 +190,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- /.modal-content -->
                                     </div>
-                                    <!-- /.modal-dialog -->
                                 </div>
                                 @endforeach
                                 @else
@@ -201,16 +199,14 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-register">
                     <em class="fas fa-plus"></em>&nbsp;Tambahkan Data Pelanggan Baru</a>
                 </button>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
-<!-- /.content -->
 </div>
 <div class="modal fade" id="modal-register">
     <div class="modal-dialog">
@@ -284,16 +280,12 @@
             </div>
             </form>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 @endsection
 @section('customjs')
 <script>
     $(document).ready(function(){
-        //ajax select kota edit
         $('#provinsi-edit').on('change', function () {
             let provindeId = $(this).val();
             if (provindeId) {

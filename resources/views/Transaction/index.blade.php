@@ -29,6 +29,7 @@
                                     <th scope="">ID Transaksi</th>
                                     <th scope="">Tanggal Pemesanan</th>
                                     <th scope="">Total Pembayaran</th>
+                                    <th scope="">Status</th>
                                     <th scope="">Aksi</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,7 @@
                                     <td>{{ $a->id_transaksi }}</td>
                                     <td>{{ $a->created_at }}</td>
                                     <td>Rp{{ number_format($a->total_bayar,0) }}</td>
+                                    <td>{{ $a->status }}</td>
                                     <td>
                                         <a data-toggle="modal" id="infoTransaksi" data-target="#modal-info{{$a->id}}"
                                             class="btn btn-info"><em class="fas fa-info-circle"></em></a>

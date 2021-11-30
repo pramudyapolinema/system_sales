@@ -46,12 +46,8 @@
                                             class="btn btn-info"><em class="fas fa-info-circle"></em></a>
                                         <a data-toggle="modal" id="updateKeranjang" data-target="#modal-edit{{$a->id}}"
                                             class="btn btn-success"><em class="fas fa-edit"></em></a>
-                                        <form action="{{ route('keranjang.destroy', $a->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"><em
-                                                    class="fas fa-trash"></em></button>
-                                        </form>
+                                        <a data-toggle="modal" id="deleteKeranjang" data-target="#modal-delete{{$a->id}}"
+                                            class="btn btn-danger"><em class="fas fa-trash"></em></a>
                                     </td>
                                     <td><strong>@Rp{{ number_format($a->produk->harga, 0) }}</strong><br>Rp{{ number_format($a->total, 0) }}
                                     </td>
@@ -107,9 +103,7 @@
                                             </div>
                                             </form>
                                         </div>
-                                        <!-- /.modal-content -->
                                     </div>
-                                    <!-- /.modal-dialog -->
                                 </div>
                                 <div class="modal fade" id="modal-info{{$a->id}}">
                                     <div class="modal-dialog">
@@ -147,6 +141,34 @@
                                                     <p>{{ $a->updated_at }}</p>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+                                <div class="modal fade" id="modal-delete{{$a->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-judul">Detail {{ $a->name }}</h4>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Anda yakin menghapus produk tersebut dari keranjang?</p>
+                                            </div>
+                                            <form action="{{ route('keranjang.destroy', $a->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="modal-footer justify-content-between">
+                                                    <button type="button" class="btn btn-default"
+                                                        data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-danger">Submit</button>
+                                                </div>
+
+                                            </form>
                                         </div>
                                         <!-- /.modal-content -->
                                     </div>

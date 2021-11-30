@@ -33,6 +33,8 @@ Route::middleware(['auth', 'ceklevel:admin,pelanggan'])->group(function () {
 Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {
     Route::resource('/keranjang', CartController::class);
     Route::resource('/checkout', TransactionController::class);
+    Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
+    Route::put('/profile/update', [CustomerController::class, 'updateProfile'])->name('updateProfile');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

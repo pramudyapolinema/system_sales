@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Models\Province;
 use App\Models\City;
+use App\Models\Transaction;
 
 class CustomerController extends Controller
 {
@@ -90,7 +92,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -164,5 +166,50 @@ class CustomerController extends Controller
         $user->delete();
         return redirect()->route('pelanggan.index')
             ->with('success', 'Pelanggan berhasil dihapus');
+    }
+
+    public function profile(){
+        $keranjang = Cart::where('id_customer', auth()->user()->id)->get()->count();
+        $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
+        $user = User::find(auth()->user()->id);
+        $provinces = Province::pluck('name', 'province_id');
+        $city = City::where('city_id', auth()->user()->kota)->first();
+        return view('customer.profile', compact('user', 'keranjang', 'transaksi', 'provinces', 'city'));
+    }
+
+    public function updateProfile(Request $request){
+        $request->validate([
+            'name'      => 'required',
+            'email'     => 'required',
+            'phone'     => 'required',
+            'alamat'    => 'required',
+            'provinsi'  => 'required',
+            'kota'      => 'required',
+        ]);
+
+        $user = User::find(auth()->user()->id);
+
+        if($request->has('fotoprofil')){
+            if($user->fotoprofil != 'images/user_profile/user.png' && file_exists(storage_path('app/public/'.$user->fotoprofil))){
+                Storage::delete('public/'.$user->fotoprofil);
+            }
+            $image_name = $request->file('fotoprofil')->store('images/user_profile', 'public');
+            $user->fotoprofil = $image_name;
+        }
+
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->alamat = $request->get('alamat');
+        $user->provinsi = $request->get('provinsi');
+        $user->kota = $request->get('kota');
+        $user->level = 'pelanggan';
+        if($request->filled('password')){
+            $user->password = bcrypt($request->get('password'));
+        }
+        $user->save();
+
+        return redirect()->route('profile')
+            ->with('success', 'Profil anda berhasil diupdate');
     }
 }

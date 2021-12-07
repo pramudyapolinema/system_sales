@@ -17,17 +17,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        switch(auth()->user()->level) {
-            case 'admin':
-                $transaksi = Transaction::all();
-                $produktransaksi = ProductTransaction::all();
-                break;
-            case 'pelanggan':
-                $transaksi = Transaction::where('id_customer', auth()->user()->id)->get();
-                $produktransaksi = ProductTransaction::all();
-                break;
-        }
-        return view('Transaction.index', compact('transaksi', 'produktransaksi'));
+        return redirect()->route('prosesTransaksi');
     }
 
     /**
@@ -49,7 +39,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $keranjang = Cart::where('id_customer', auth()->user()->id)->get();
-        $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
+        $transaksi = Transaction::all()->count();
         $notrans = "T" . sprintf("%06d", $transaksi+1);
         $total = 0;
         $berat = 0;
@@ -77,7 +67,7 @@ class TransactionController extends Controller
             $prodtrans->save();
             Cart::find($k->id)->delete();
         }
-        return redirect()->route('checkout.index')
+        return redirect()->route('transaksi.index')
             ->with('success', 'Checkout anda berhasil!');
     }
 
@@ -152,7 +142,7 @@ class TransactionController extends Controller
         $transaction = Transaction::find($id);
         $transaction->status = 'Dibayar';
         $transaction->save();
-        return redirect()->route('checkout.index')
+        return redirect()->route('transaksi.index')
             ->with('success', "Transaksi telah dibayar!");
     }
 
@@ -161,7 +151,60 @@ class TransactionController extends Controller
         $transaction->resi = $request->get('resi');
         $transaction->status = 'Dikirim';
         $transaction->save();
-        return redirect()->route('checkout.index')
+        return redirect()->route('transaksi.index')
             ->with('success', "Resi berhasil diupdate!");
+    }
+
+    public function prosesTransaksi(){
+        switch(auth()->user()->level) {
+            case 'admin':
+                $transaksi = Transaction::where('status', 'Menunggu')
+                    ->orWhere('status', 'Dibayar')->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+            case 'pelanggan':
+                $transaksi = Transaction::where('id_customer', auth()->user()->id)
+                    ->where('status', 'Menunggu')->orWhere('status', 'Dibayar')->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+        }
+        return view('Transaction.index', compact('transaksi', 'produktransaksi'));
+    }
+
+    public function kirimTransaksi(){
+        switch(auth()->user()->level) {
+            case 'admin':
+                $transaksi = Transaction::where('status', 'Dikirim')->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+            case 'pelanggan':
+                $transaksi = Transaction::where('id_customer', auth()->user()->id)->where('status', 'Dikirim')
+                    ->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+        }
+        return view('Transaction.index', compact('transaksi', 'produktransaksi'));
+    }
+
+    public function selesaiTransaksi(){
+        switch(auth()->user()->level) {
+            case 'admin':
+                $transaksi = Transaction::where('status', 'Selesai')->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+            case 'pelanggan':
+                $transaksi = Transaction::where('id_customer', auth()->user()->id)->where('status', 'Selesai')
+                    ->orderBy('created_at', 'DESC')->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+        }
+        return view('Transaction.index', compact('transaksi', 'produktransaksi'));
+    }
+
+    public function cancelTransaksi($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = 'Dibatalkan';
+        $transaction->save();
+        return redirect()->route('prosesTransaksi')->with('sucess', 'Transaksi Dibatalkan');
     }
 }

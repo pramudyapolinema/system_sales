@@ -373,7 +373,7 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                <form action="{{ route('checkout.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('transaksi.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <button type="submit" class="btn btn-primary">Checkout</button>
                 </form>

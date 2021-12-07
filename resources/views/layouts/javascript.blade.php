@@ -37,43 +37,16 @@
 <script src="{{ asset('assets/AdminLTE/dist/js/demo.js') }}"></script>
 @if ($message = Session::get('success'))
 <script>
-    $(document).ready(function() {
-      toastr.success('{{ $message }}')
-    });
+    $(document).ready(function(){toastr.success("{{ $message }}")});
 </script>
 @endif
 @if ($message = Session::get('error'))
 <script>
-    $(document).ready(function() {
-      toastr.error('{{ $message }}')
-    });
+    $(document).ready(function() {toastr.error('{{ $message }}')});
 </script>
 @endif
 <script>
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": true,
-            "autoWidth": true,
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": true,
-            "searching": true,
-            "ordering": true,
-            "info": true,
-            "autoWidth": true,
-            "responsive": true,
-        });
-    });
-
-    $(function () {
-        $('.select2').select2();
-        $('.select2bs4').select2({
-            theme: 'bootstrap4'
-        });
-    });
+    $(function(){$("#example1").DataTable({responsive:!0,lengthChange:!0,autoWidth:!0}).buttons().container().appendTo("#example1_wrapper .col-md-6:eq(0)"),$("#example2").DataTable({paging:!0,lengthChange:!0,searching:!0,ordering:!0,info:!0,autoWidth:!0,responsive:!0})}),$(function(){$(".select2").select2(),$(".select2bs4").select2({theme:"bootstrap4"})});
 </script>
 @yield('customjs')
 

@@ -52,18 +52,28 @@
                                                     @case('Menunggu')
                                                     <a href="{{ route('konfirmasipembayaran', $a->id) }}" id="konfirmasipembayaran"
                                                         class="btn btn-warning"><em class="fas fa-check-circle"></em></a>
-                                                    <a href="" id="pembatalan" class="btn btn-danger"><em class="fas fa-times"></em></a>
+                                                    <a data-toggle="modal" data-target="#modal-cancel{{$a->id}}" id="pembatalan" class="btn btn-danger"><em class="fas fa-times"></em></a>
                                                     @break
                                                     @case('Dibayar')
                                                     <a data-toggle="modal" data-target="#modal-resi{{$a->id}}" id="inputresi"
                                                         class="btn btn-primary"><em class="fas fa-truck"></em></a>
                                                     <a href="" id="pembatalan" class="btn btn-danger"><em class="fas fa-times"></em></a>
                                                     @break
+
                                                 @endswitch
                                                 <a data-toggle="modal" id="infoTransaksi" data-target="#modal-info{{$a->id}}"
                                                     class="btn btn-info"><em class="fas fa-info-circle"></em></a>
                                             @break
                                             @case('pelanggan')
+                                                @switch($a->status)
+                                                    @case('Menunggu')
+                                                    <a data-toggle="modal" data-target="#modal-cancel{{$a->id}}" id="pembatalan" class="btn btn-danger"><em class="fas fa-times"></em></a>
+                                                    @break
+                                                    @case('Dikirim')
+                                                    <a data-toggle="modal" data-target="#modal-selesai{{ $a->id }}" id="selesaikantransaksi"
+                                                    class="btn btn-success"><em class="fas fa-check-circle"></em></a>
+                                                    @break
+                                                @endswitch
                                             <a data-toggle="modal" id="infoTransaksi" data-target="#modal-info{{$a->id}}"
                                                 class="btn btn-info"><em class="fas fa-info-circle"></em></a>
                                             @break
@@ -76,7 +86,6 @@
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-                                                        <th>No.</th>
                                                         <th>Nama Produk</th>
                                                         <th>Gambar</th>
                                                         <th>Jumlah</th>
@@ -88,7 +97,6 @@
                                                     @foreach ($produktransaksi as $p)
                                                     @if ($a->id_transaksi == $p->id_transaksi)
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
                                                         <td>{{ $p->produk->nama_produk }}</td>
                                                         <td><img width="100px" src="{{ $p->produk->foto_produk }}"></td>
                                                         <td>{{ $p->jumlah }}</td>
@@ -106,6 +114,26 @@
                                         </p>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="modal-cancel{{$a->id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modal-judul">Batalkan transaksi {{ $a->id_transaksi }}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>Anda yakin ingin membatalkan transaksi {{ $a->id_transaksi }}</p>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <a href="{{ route('cancelTransaksi', $a->id) }}" type="submit" class="btn btn-primary">Submit</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @if(auth()->user()->level == 'admin')
                                 <div class="modal fade" id="modal-resi{{$a->id}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -132,6 +160,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                                 @endforeach
                                 @endif
                             </tbody>

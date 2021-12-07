@@ -19,7 +19,7 @@ class CartController extends Controller
     {
         $produk = Product::all();
         $keranjang = Cart::where('id_customer', auth()->user()->id)->get();
-        $transaksi = Transaction::where('id_customer', auth()->user()->id)->get()->count();
+        $transaksi = Transaction::all()->count();
         $notrans = "T" . sprintf("%06d", $transaksi+1);
         $total = 0;
         $berat = 0;

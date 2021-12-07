@@ -27,7 +27,7 @@
                     <div class="icon">
                         <i class="fas fa-money-bill"></i>
                     </div>
-                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                    <a href="{{ route('transaksi.index') }}" class="small-box-footer">Halaman Transaksi <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <div class="icon">
                         <i class="fas fa-money-check-alt"></i>
                     </div>
-                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                    <a href="{{ route('transaksi.index') }}" class="small-box-footer">Halaman Transaksi <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
@@ -53,39 +53,11 @@
                     <div class="icon">
                         <i class="fas fa-truck"></i>
                     </div>
-                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                    <a href="{{ route('transaksi.index') }}" class="small-box-footer">Halaman Transaksi <i
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
             @endif
-
-            {{-- <div class="col-lg-3 col-6">
-                <div class="small-box bg-warning">
-                    <div class="inner">
-                        <h3>{{ $user }}</h3>
-
-            <p>Jumlah Pengguna</p>
-        </div>
-        <div class="icon">
-            <i class="ion ion-person-add"></i>
-        </div>
-        <a href="{{ route('alluser.index') }}" class="small-box-footer">Halaman Pengguna <i
-                class="fas fa-arrow-circle-right"></i></a>
-    </div>
-    </div> --}}
-    {{-- <div class="col-lg-3 col-6">
-                <div class="small-box bg-danger">
-                    <div class="inner">
-                        <h3>65</h3>
-
-                        <p>Unique Visitors</p>
-                    </div>
-                    <div class="icon">
-                        <i class="ion ion-pie-graph"></i>
-                    </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                </div>
-            </div> --}}
     </div>
     <div class="row">
         <section class="col-lg-7 connectedSortable">

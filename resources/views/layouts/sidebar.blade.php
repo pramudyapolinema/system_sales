@@ -38,8 +38,8 @@
                 </li>
                 @if (auth()->user()->level == "admin")
                 <li class="nav-header">ADMIN</li>
-                <li class="nav-item {{ (request()->is('admin')) ? 'menu-open' : '' }} {{ (request()->is('pelanggan')) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ (request()->is('admin')) ? 'active' : '' }} {{ (request()->is('pelanggan')) ? 'active' : '' }}">
+                <li class="nav-item {{ (request()->is('admin', 'pelanggan')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('admin', 'pelanggan')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
                             User
@@ -66,14 +66,6 @@
                         <i class="nav-icon fas fa-list"></i>
                         <p>
                             Produk
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('checkout.index')}}" class="nav-link {{ (request()->is('checkout')) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-wallet"></i>
-                        <p>
-                            Transaksi
                         </p>
                     </a>
                 </li>
@@ -104,15 +96,36 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('checkout.index')}}" class="nav-link {{ (request()->is('checkout')) ? 'active' : '' }}">
+                @endif
+                <li class="nav-item {{ (request()->is('transaksi/*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('transaksi/*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-wallet"></i>
                         <p>
-                            Transaksi
+                            Data Transaksi
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('prosesTransaksi') }}" class="nav-link {{ (request()->is('transaksi/diproses')) ? 'active' : '' }}">
+                                <i class="far fa-box-alt nav-icon"></i>
+                                <p>Diproses</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('kirimTransaksi') }}" class="nav-link {{ (request()->is('transaksi/dikirim')) ? 'active' : '' }}">
+                                <i class="far fa-shipping-timed nav-icon"></i>
+                                <p>Dikirim</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('selesaiTransaksi') }}" class="nav-link {{ (request()->is('transaksi/selesai')) ? 'active' : '' }}">
+                                <i class="far fa-check nav-icon"></i>
+                                <p>Selesai</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-                @endif
             </ul>
         </nav>
     </div>

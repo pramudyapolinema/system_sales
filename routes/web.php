@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TransactionController;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,8 +30,13 @@ Route::middleware(['auth', 'ceklevel:admin'])->group(function () {
 
 Route::middleware(['auth', 'ceklevel:admin,pelanggan'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/transaksi/diproses', [TransactionController::class, 'prosesTransaksi'])->name('prosesTransaksi');
+    Route::get('/transaksi/dikirim', [TransactionController::class, 'kirimTransaksi'])->name('kirimTransaksi');
+    Route::get('/transaksi/selesai', [TransactionController::class, 'selesaiTransaksi'])->name('selesaiTransaksi');
+    Route::get('/transaksi/batalkan/{id}', [TransactionController::class, 'cancelTransaksi'])->name('cancelTransaksi');
     Route::resource('/produk', ProductController::class);
-    Route::resource('/checkout', TransactionController::class);
+    Route::resource('/transaksi', TransactionController::class);
+
 });
 
 Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {

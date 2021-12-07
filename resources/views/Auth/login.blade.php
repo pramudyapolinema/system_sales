@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="#" class="h1"><b>Sales</b> System</a>
+      <a href="#" class="h1"><b>Billy</b> Beans</a>
     </div>
     <div class="card-body">
         @if ($message = Session::get('error'))

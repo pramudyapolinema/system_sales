@@ -16,11 +16,11 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    {{-- <div class="wrapper">
+    <div class="wrapper">
         <div class="preloader flex-column justify-content-center align-items-center">
             <img class="animation__shake" src="{{ asset('assets/AdminLTE/dist/img/AdminLTELogo.png') }}"
-        alt="AdminLTELogo" height="60" width="60">
-    </div> --}}
+        alt="AdminLTELogo" height="150" width="150">
+    </div>
 
     @include('layouts.navbar')
     @include('layouts.sidebar')

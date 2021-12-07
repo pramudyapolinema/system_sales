@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->integer('ongkir');
             $table->integer('total_bayar');
             $table->string('status', 10);
+            $table->string('resi', 100)->nullable();
             $table->timestamps();
             $table->foreign('id_customer')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

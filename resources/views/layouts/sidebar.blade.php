@@ -69,6 +69,14 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('checkout.index')}}" class="nav-link {{ (request()->is('checkout')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Transaksi
+                        </p>
+                    </a>
+                </li>
                 @endif
                 @if (auth()->user()->level == "pelanggan")
                 <li class="nav-header">Pelanggan</li>

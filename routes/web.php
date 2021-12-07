@@ -23,16 +23,18 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth', 'ceklevel:admin'])->group(function () {
     Route::resource('/admin', AdminController::class);
     Route::resource('/pelanggan', CustomerController::class);
+    Route::get('/konfirmasipembayaran/{id}', [TransactionController::class, 'konfirmasipembayaran'])->name('konfirmasipembayaran');
+    Route::post('/updateresi/{id}', [TransactionController::class, 'updateResi'])->name('updateResi');
 });
 
 Route::middleware(['auth', 'ceklevel:admin,pelanggan'])->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::resource('/produk', ProductController::class);
+    Route::resource('/checkout', TransactionController::class);
 });
 
 Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {
     Route::resource('/keranjang', CartController::class);
-    Route::resource('/checkout', TransactionController::class);
     Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
     Route::put('/profile/update', [CustomerController::class, 'updateProfile'])->name('updateProfile');
 });

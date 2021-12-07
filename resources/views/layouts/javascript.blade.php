@@ -35,6 +35,13 @@
 <script src="{{ asset('assets/AdminLTE/plugins/bs-stepper/js/bs-stepper.min.js') }}"></script>
 <script src="{{ asset('assets/AdminLTE/plugins/dropzone/min/dropzone.min.js') }}"></script>
 <script src="{{ asset('assets/AdminLTE/dist/js/demo.js') }}"></script>
+@if ($message = Session::get('success'))
+<script>
+    $(document).ready(function() {
+      toastr.success('{{ $message }}')
+    });
+</script>
+@endif
 @if ($message = Session::get('error'))
 <script>
     $(document).ready(function() {

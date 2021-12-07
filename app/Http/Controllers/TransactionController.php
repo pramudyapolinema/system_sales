@@ -17,8 +17,17 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaksi = Transaction::where('id_customer', auth()->user()->id)->get();
-        return view('Transaction.index', compact('transaksi'));
+        switch(auth()->user()->level) {
+            case 'admin':
+                $transaksi = Transaction::all();
+                $produktransaksi = ProductTransaction::all();
+                break;
+            case 'pelanggan':
+                $transaksi = Transaction::where('id_customer', auth()->user()->id)->get();
+                $produktransaksi = ProductTransaction::all();
+                break;
+        }
+        return view('Transaction.index', compact('transaksi', 'produktransaksi'));
     }
 
     /**
@@ -137,5 +146,22 @@ class TransactionController extends Controller
     public function destroy(Transaction $transaction)
     {
         //
+    }
+
+    public function konfirmasipembayaran($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = 'Dibayar';
+        $transaction->save();
+        return redirect()->route('checkout.index')
+            ->with('success', "Transaksi telah dibayar!");
+    }
+
+    public function updateResi(Request $request, $id){
+        $transaction = Transaction::find($id);
+        $transaction->resi = $request->get('resi');
+        $transaction->status = 'Dikirim';
+        $transaction->save();
+        return redirect()->route('checkout.index')
+            ->with('success', "Resi berhasil diupdate!");
     }
 }

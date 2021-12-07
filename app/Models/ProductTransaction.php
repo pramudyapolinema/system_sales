@@ -21,4 +21,8 @@ class ProductTransaction extends Model
     public function produk() {
         return $this->belongsTo(Product::class, 'id_product', 'id');
     }
+
+    public function produktransaksi() {
+        return $this->belongsTo(Transaction::class, 'id_transaksi', 'id_transaksi');
+    }
 }

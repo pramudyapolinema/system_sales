@@ -8,10 +8,8 @@
             <div class="col-lg-3 col-6">
                 <div class="small-box bg-info">
                     <div class="inner">
-
                         <h3>{{ $keranjang }}</h3>
                         <p>Keranjang</p>
-
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -20,20 +18,47 @@
                             class="fas fa-arrow-circle-right"></i></a>
                 </div>
             </div>
-            @endif
-            {{-- <div class="col-lg-3 col-6">
-                <div class="small-box bg-success">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                        <p>Bounce Rate</p>
+                        <h3>{{ $transaksi }}</h3>
+                        <p>Pesanan Menunggu Pembayaran</p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-stats-bars"></i>
+                        <i class="fas fa-money-bill"></i>
                     </div>
-                    <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                            class="fas fa-arrow-circle-right"></i></a>
                 </div>
-            </div> --}}
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $dibayar }}</h3>
+                        <p>Pesanan Dibayar</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-check-alt"></i>
+                    </div>
+                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>{{ $dikirim }}</h3>
+                        <p>Pesanan Dikirim</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <a href="{{ route('checkout.index') }}" class="small-box-footer">Halaman Transaksi <i
+                            class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            @endif
+
             {{-- <div class="col-lg-3 col-6">
                 <div class="small-box bg-warning">
                     <div class="inner">

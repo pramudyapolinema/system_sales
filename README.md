@@ -50,3 +50,27 @@ localhost:8000
 ```
 * Use email : admin@proyek.com and password : admin
 * Use email : user@proyek.com and password : user
+
+## Dockerized
+### Build
+```
+git clone https://github.com/pramudyapolinema/system_sales.git
+cd system_sales
+```
+### Environtment Setting
+* Copy .env.example to .env
+```
+sudo cp .env.example .env
+```
+* Make sure all parameter has been filled with valid data
+### Run Docker Compose
+```
+sudo docker-compose up -d
+```
+### Laravel initialization
+```
+sudo ./laravel.sh
+```
+### Testing
+* Open your browser, type your Public IP Address or use localhost
+* If it show login page use email : admin@proyek.com and password : admin or email : user@proyek.com and password : user

@@ -1,4 +1,4 @@
-FROM php:8.0-apache
+FROM php:7.4-apache
 
 WORKDIR /var/www/html
 
@@ -31,3 +31,7 @@ RUN a2dissite 000-default.conf; \
     a2enmod rewrite
 
 COPY . .
+
+MKDIR /var/www/html/public/products
+
+RUN chmod 777 /var/www/html/public/products

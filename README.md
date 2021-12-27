@@ -9,8 +9,8 @@ SISTEM INFORMASI  PENJUALAN PADA BILLIE BEANS SUPPLY COFFE.CO BERBASIS WEB
 |:--:|:-------------------:|:----------:|
 |  1 | Abdur Rozak Junaidi | 1941720094 |
 |  2 | Dwi Nur Oktaviani   | 1941720239 |
-|  3 | Mochammad Dimasqi   |            |
-|  4 | Noor Afiad          |            |
+|  3 | Mochammad Dimasqi   | 1941720165 |
+|  4 | Noor Afiad          | 1941720232 |
 |  5 | Pramudya Wibowo     | 1941720054 |
 
 Build

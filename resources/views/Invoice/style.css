@@ -1,0 +1,50 @@
+h1{
+	font-size: 5em;
+	text-align: right; 
+	letter-spacing: 7px;
+	text-shadow: 5px 5px #A6A6A6;
+	font-weight: 700;
+}
+hr{
+	border:2px solid #A6A6A6;
+	display: block;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	margin-left: 15em;
+	margin-right: auto;
+	border-style: inset;
+	border-width: 1.5px;
+
+}
+table{
+	margin-top: 20px;
+}
+
+.isi1{
+	margin-top: 20px;
+}
+
+.label1{
+	color:#E58832;
+	text-align: right;
+	font-weight: bold;
+}
+
+.label2{
+	font-weight: bold;
+}
+.label3{
+	text-align: right;
+}
+.label4{
+	color:#E58832;
+	font-weight: bold;
+}
+.tab{
+	display: inline-block;
+    margin-left: 30px;
+}
+.label5{
+	font-size: 25px; 
+	font-weight: bold;
+}

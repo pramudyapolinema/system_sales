@@ -72,10 +72,17 @@
                                                     @case('Dikirim')
                                                     <a data-toggle="modal" data-target="#modal-selesai{{ $a->id }}" id="selesaikantransaksi"
                                                     class="btn btn-success"><em class="fas fa-check-circle"></em></a>
+                                                    <a href = "{{route('invoice',$a->id_transaksi)}}" id="infoInvoice" 
+                                                    class="btn btn-outline-success">invoice</a>
+                                                    @break
+                                                    @case('Dibayar')
+                                                    <a href = "{{route('invoice',$a->id_transaksi)}}" id="infoInvoice" 
+                                                    class="btn btn-outline-success">invoice</a>
                                                     @break
                                                 @endswitch
                                             <a data-toggle="modal" id="infoTransaksi" data-target="#modal-info{{$a->id}}"
                                                 class="btn btn-info"><em class="fas fa-info-circle"></em></a>
+                                            
                                             @break
                                         @endswitch
                                     </td>

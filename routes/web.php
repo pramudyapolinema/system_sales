@@ -43,6 +43,7 @@ Route::middleware(['auth', 'ceklevel:pelanggan'])->group(function () {
     Route::resource('/keranjang', CartController::class);
     Route::get('/profile', [CustomerController::class, 'profile'])->name('profile');
     Route::put('/profile/update', [CustomerController::class, 'updateProfile'])->name('updateProfile');
+    Route::get('/invoice/{id}', [TransactionController::class, 'infoInvoice'])->name('invoice');
 });
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');

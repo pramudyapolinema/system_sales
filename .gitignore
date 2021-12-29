@@ -13,3 +13,5 @@ yarn-error.log
 /.idea
 /.vscode
 /public/images/*
+/public/storage/images/user_profile/*
+!/public/storage/images/user_profile/user.png

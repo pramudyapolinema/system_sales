@@ -1,4 +1,4 @@
-Kelompok 5 Proyek TI 3D
+Kelompok 5 Proyek TI 3D + Cloud Computing Deployment
 ===
 
 SISTEM INFORMASI  PENJUALAN PADA BILLIE BEANS SUPPLY COFFE.CO BERBASIS WEB
@@ -15,62 +15,31 @@ SISTEM INFORMASI  PENJUALAN PADA BILLIE BEANS SUPPLY COFFE.CO BERBASIS WEB
 
 Build
 =====
-### Clone repository
-```
-git clone https://github.com/pramudyapolinema/system_sales.git
-```
-### NPM & composer Setup
-```
-npm install
-composer install
-```
-### Environtment Setting
-* Copy .env.example to .env
-* Make sure all parameter has been filled with valid data
-```
-php artisan key:generate
-```
-### Migrating
-* Make sure your MySQL Database is running
-```
-php artisan migrate
-```
-### Seeding
-```
-php artisan db:seed --class=LocationSeeder
-php artisan db:seed --class=UserSeeder
-```
-### Run Laravel
-```
-php artisan serve
-```
-* Open your browser and type
-```
-localhost:8000
-```
-* Use email : admin@proyek.com and password : admin
-* Use email : user@proyek.com and password : user
+### EVERYTHING IS AUTOMATICALLY JUST SETUP THE SECRETS
+### OCI CLI Secrets
+* DB_PASSWORD : Database Passowrd
+* DB_USERNAME : Databse Username
+* DOCKERHUB_TOKEN
+* DOCKERHUB_USERNAME
+* OCI_FINGERPRINT
+* OCI_KEY_FILE
+* OCI_KEY_PUBLIC
+* OCI_REGION
+* OCI_TENANCY_OCID
+* OCI_USER_OCID
+* VM_AVAILABILITY_DOMAIN
+* VM_COMPARTMENT_OCID
+* VM_CUSTOM_IMAGE_OCID
+* VM_SHAPE
+* VM_SUBNET_OCID
 
-## Dockerized
-### Build
-```
-git clone https://github.com/pramudyapolinema/system_sales.git
-cd system_sales
-```
-### Environtment Setting
-* Copy .env.example to .env
-```
-sudo cp .env.example .env
-```
-* Make sure all parameter has been filled with valid data
-### Run Docker Compose
-```
-sudo docker-compose up -d
-```
-### Laravel initialization
-```
-sudo ./laravel.sh
-```
+### Laravel Environtment Secrets
+* ORACLE_ACCESS_KEY
+* ORACLE_DEFAULT_REGION
+* ORACLE_NAMESPACE
+* ORACLE_SECRET_KEY
+* RAJAONGKIR_API_KEY
+
 ### Testing
 * Open your browser, type your Public IP Address or use localhost
 * If it show login page use email : admin@proyek.com and password : admin or email : user@proyek.com and password : user

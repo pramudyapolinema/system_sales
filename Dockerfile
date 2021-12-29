@@ -2,9 +2,9 @@ FROM php:7.4-apache
 
 WORKDIR /var/www/html
 
-RUN apt-get update
+RUN apt update
 
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
         libpng-dev \
         zlib1g-dev \
         libxml2-dev \
@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
         zip \
         curl \
         unzip \
+        mariadb-client-core-10.5 \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql \
@@ -32,4 +33,6 @@ RUN a2dissite 000-default.conf; \
 
 COPY . .
 
-RUN mkdir -m 777 -p /var/www/html/public/products
+RUN mkdir -p /var/www/html/public/images/products
+
+RUN chmod 777 /var/www/html/public/images/products

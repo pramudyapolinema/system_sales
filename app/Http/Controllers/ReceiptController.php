@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductTransaction;
 use App\Models\Receipt;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReceiptController extends Controller
 {
@@ -14,8 +17,7 @@ class ReceiptController extends Controller
      */
     public function index()
     {
-        $nota = Receipt::all();
-        return view('nota.index', compact('nota'));
+
     }
 
     /**
@@ -82,5 +84,16 @@ class ReceiptController extends Controller
     public function destroy(Receipt $receipt)
     {
         //
+    }
+
+    public function infoInvoice($id)
+    {
+        $transaksi = Transaction::where('id_customer',Auth::user()->id)->where('id_transaksi',$id)->first();
+        $produktransaksi = ProductTransaction::with('produk','produktransaksi')->where('id_transaksi',$id)->get();
+        $subtotal = 0;
+        foreach($produktransaksi as $pt){
+            $subtotal = $subtotal + ($pt->produk->harga * $pt->jumlah);
+        }
+        return view('invoice.index', compact('transaksi', 'produktransaksi', 'subtotal'));
     }
 }

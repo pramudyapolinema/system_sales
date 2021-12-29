@@ -209,17 +209,4 @@ class TransactionController extends Controller
         $transaction->save();
         return redirect()->route('prosesTransaksi')->with('sucess', 'Transaksi Dibatalkan');
     }
-
-    public function infoInvoice($id){
-        $usertransaction = Transaction::all()->where('id_customer',Auth::user()->id)->where('id_transaksi',$id)->first();
-        $transaction = ProductTransaction::with('produk','produktransaksi')->where('id_transaksi',$id)->get();
-        //$date = date('Y.m.d',strtotime($usertransaction->created_at));
-        //$date = Carbon::createFromFormat('Y-m-d H:1i:s', $usertransaction->created_at);
-        //$daysToAdd = 1;
-        //$date = $date->addDays($daysToAdd)->format('d F Y');
-        $user = Auth::user()->where('id',$usertransaction->id_customer)->first();
-        //$produk = Products::with('ProductTransaction')->where('id_transaksi',$transaction->id_transaksi)->get();
-        return view('invoice.index',['transaksi'=>$transaction,'usertransaction'=>$usertransaction,'user'=>$user]);
-        //return $transaction;
-    }
 }

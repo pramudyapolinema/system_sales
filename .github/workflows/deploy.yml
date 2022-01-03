@@ -158,8 +158,8 @@ jobs:
             cp .env.example .env
             chmod 777 .env
             mysql -u ${{secrets.DB_USERNAME}} -p${{secrets.DB_PASSWORD}} -h ${{env.MySQL_IP}} -e "CREATE DATABASE IF NOT EXISTS system_sales;"
-            echo -e "DB_HOST=${{env.MySQL_IP}}\nDB_USERNAME=${{secrets.DB_USERNAME}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}" >> .env
-            echo -e "ORACLE_ACCESS_KEY=${{secrets.ORACLE_ACCESS_KEY}}\nORACLE_SECRET_KEY=\"${{secrets.ORACLE_SECRET_KEY}}\"\nORACLE_DEFAULT_REGION=${{secrets.ORACLE_DEFAULT_REGION}}\nORACLE_NAMESPACE=${{secrets.ORACLE_NAMESPACE}}" >> .env
+            echo -e "DB_HOST=${{env.MySQL_IP}}\nDB_USERNAME=${{secrets.DB_USERNAME}}\nDB_PASSWORD=${{secrets.DB_PASSWORD}}\n" >> .env
+            echo -e "ORACLE_ACCESS_KEY=${{secrets.ORACLE_ACCESS_KEY}}\nORACLE_SECRET_KEY=\"${{secrets.ORACLE_SECRET_KEY}}\"\nORACLE_DEFAULT_REGION=${{secrets.ORACLE_DEFAULT_REGION}}\nORACLE_NAMESPACE=${{secrets.ORACLE_NAMESPACE}}\nORACLE_PAR_BUCKET=${{secrets.ORACLE_PAR_BUCKET}}\n" >> .env
             echo -e "RAJAONGKIR_API_KEY=${{secrets.RAJAONGKIR_API_KEY}}" >> .env
             chmod -R 777 /var/www/html/storage/
             composer install

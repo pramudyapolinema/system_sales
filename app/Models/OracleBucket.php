@@ -5,6 +5,7 @@ define('ORACLE_ACCESS_KEY', env('ORACLE_ACCESS_KEY'));
 define('ORACLE_SECRET_KEY', env('ORACLE_SECRET_KEY'));
 define('ORACLE_REGION', env('ORACLE_DEFAULT_REGION'));
 define('ORACLE_NAMESPACE', env('ORACLE_NAMESPACE'));
+define('ORACLE_PAR_BUCKET', env('ORACLE_PAR_BUCKET'));
 
 class OracleBucket {
 public function get_oracle_client($endpoint)
@@ -42,9 +43,7 @@ public function upload_file_oracle($bucket_name, $folder_name = '', $file_name)
 
     $s3 = $this->get_oracle_client($endpoint);
     $s3->getEndpoint();
-
-    //https://objectstorage.ap-sydney-1.oraclecloud.com/p/TZ1m-IZuAvyjYrLPxX5em6cGOgoEtlHEEy2rwsH0olpAm2JiZzIKasERUOEy5y6c/n/sdesiggjgjjm/b/system_sales/o/
-    $file_url = "https://objectstorage.".ORACLE_REGION.".oraclecloud.com/p/TZ1m-IZuAvyjYrLPxX5em6cGOgoEtlHEEy2rwsH0olpAm2JiZzIKasERUOEy5y6c/n/".ORACLE_NAMESPACE."/b/{$bucket_name}/o/{$keyname}";
+    $file_url = "https://objectstorage.".ORACLE_REGION.".oraclecloud.com/p/".ORACLE_PAR_BUCKET."/n/".ORACLE_NAMESPACE."/b/{$bucket_name}/o/{$keyname}";
     try {
         $s3->putObject(array(
             'Bucket' => $bucket_name,

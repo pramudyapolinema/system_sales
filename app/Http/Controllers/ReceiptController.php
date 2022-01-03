@@ -94,6 +94,6 @@ class ReceiptController extends Controller
         foreach($produktransaksi as $pt){
             $subtotal = $subtotal + ($pt->produk->harga * $pt->jumlah);
         }
-        return view('invoice.index', compact('transaksi', 'produktransaksi', 'subtotal'));
+        return view('Invoice.index', compact('transaksi', 'produktransaksi', 'subtotal'));
     }
 }
